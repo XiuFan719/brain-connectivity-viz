@@ -255,9 +255,9 @@ Circos Link
 <div class="st">Parameters</div>
 <div class="sg"><div class="sl"><span>连接透明度</span><span id="ov">0.45</span></div><input type="range" min="5" max="95" value="45" oninput="OP=this.value/100;$('ov').textContent=OP.toFixed(2);render()"></div>
 <div class="sg"><div class="sl"><span>弧间距</span><span id="pv">0.02</span></div><input type="range" min="1" max="15" value="2" oninput="PAD=this.value/100;$('pv').textContent=PAD.toFixed(2);render()"></div>
-<div class="sg"><div class="sl"><span>圆环宽度</span><span id="rw">14</span></div><input type="range" min="4" max="100" value="14" oninput="RW=+this.value;$('rw').textContent=RW;render()"></div>
+<div class="sg"><div class="sl"><span>圆环宽度</span><span id="rw">76</span></div><input type="range" min="4" max="100" value="76" oninput="RW=+this.value;$('rw').textContent=RW;render()"></div>
 <div class="sg"><div class="sl"><span>线条粗细</span><span id="lw">1.5</span></div><input type="range" min="2" max="60" value="15" oninput="LW=this.value/10;$('lw').textContent=LW.toFixed(1);render()"></div>
-<div class="sg"><div class="sl"><span>Gyrus字号</span><span id="gfs">0</span></div><input type="range" min="0" max="30" value="0" oninput="GFS=+this.value;$('gfs').textContent=GFS||'自动';render()"></div>
+<div class="sg"><div class="sl"><span>Gyrus字号</span><span id="gfs">18</span></div><input type="range" min="0" max="30" value="18" oninput="GFS=+this.value;$('gfs').textContent=GFS||'自动';render()"></div>
 <div class="sg"><div class="sl"><span>旋转角度</span><span id="rot-val">0°</span></div><input type="range" min="0" max="360" value="0" oninput="ROT=+this.value;$('rot-val').textContent=ROT+'°';render()"></div>
 </div>
 <div class="sec"><div class="st">Info</div><div class="ic" id="info"><h4>Hover</h4><div class="ir"><span class="la">悬停脑区查看详情</span></div></div></div>
@@ -400,7 +400,7 @@ let allR=[], lobeSpans=[], gyrusSpans=[];
 
 // ===== STATE =====
 let selSet=new Set(), labelMode='gyrus', gyrusOnRing=true, showIdx=true;
-let TH=0.30, OP=0.45, PAD=0.02, RW=14, LW=1.5, GFS=0, COLOR_SHIFT=0, ROT=0;
+let TH=0.30, OP=0.45, PAD=0.02, RW=76, LW=1.5, GFS=18, COLOR_SHIFT=0, ROT=0;
 let manualEdges=[], fullFC=null, bgColor='#0a0e17';
 let edgeFilterMode='threshold', TOPN=20, topDir='strong';
 let curTheme='dark';
