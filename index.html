@@ -14,77 +14,77 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;height:100vh;overflow:hidden}
-.app{display:grid;grid-template-columns:290px 1fr 270px;grid-template-rows:48px 1fr;height:100vh}
+.app{display:grid;grid-template-columns:310px 1fr 290px;grid-template-rows:52px 1fr;height:100vh}
 .hdr{grid-column:1/-1;background:var(--bg-panel);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 18px;gap:12px}
-.logo{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:15px;color:var(--accent)}
+.logo{font-family:'JetBrains Mono',monospace;font-weight:600;font-size:17px;color:var(--accent)}
 .logo span{color:var(--text-dim);font-weight:300}
-.hinfo{margin-left:auto;font-size:10px;color:var(--text-dim);font-family:'JetBrains Mono',monospace}
-.pnl{background:var(--bg-panel);overflow-y:auto;padding:10px}
+.hinfo{margin-left:auto;font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace}
+.pnl{background:var(--bg-panel);overflow-y:auto;padding:12px}
 .pnl::-webkit-scrollbar{width:3px}
 .pnl::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 .pl{border-right:1px solid var(--border)}
 .pr{border-left:1px solid var(--border)}
-.sec{margin-bottom:12px}
-.st{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:500;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim);margin-bottom:7px;padding-bottom:4px;border-bottom:1px solid var(--border)}
-select.ctrl{width:100%;padding:5px 8px;background:var(--bg-card);border:1px solid var(--border);color:var(--text);font-size:11px;border-radius:4px;cursor:pointer;outline:none}
-.tr{display:flex;background:var(--bg-card);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:5px}
-.tb{flex:1;padding:4px 2px;text-align:center;font-size:8px;font-family:'JetBrains Mono',monospace;color:var(--text-dim);cursor:pointer;border:none;background:transparent;transition:all .12s}
+.sec{margin-bottom:14px}
+.st{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-dim);margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--border)}
+select.ctrl{width:100%;padding:6px 10px;background:var(--bg-card);border:1px solid var(--border);color:var(--text);font-size:13px;border-radius:5px;cursor:pointer;outline:none}
+.tr{display:flex;background:var(--bg-card);border:1px solid var(--border);border-radius:5px;overflow:hidden;margin-bottom:6px}
+.tb{flex:1;padding:6px 4px;text-align:center;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text-dim);cursor:pointer;border:none;background:transparent;transition:all .12s}
 .tb+.tb{border-left:1px solid var(--border)}
 .tb.a{background:var(--accent-glow);color:var(--accent)}
 .tb:hover:not(.a){color:var(--text)}
-.desc{font-size:8px;color:var(--text-dim);line-height:1.4;padding:2px;margin-bottom:4px}
-.lg{margin-bottom:4px}
-.lh{display:flex;align-items:center;gap:5px;padding:3px 5px;border-radius:3px;cursor:pointer;user-select:none;transition:background .12s}
+.desc{font-size:11px;color:var(--text-dim);line-height:1.5;padding:3px;margin-bottom:5px}
+.lg{margin-bottom:5px}
+.lh{display:flex;align-items:center;gap:6px;padding:4px 6px;border-radius:4px;cursor:pointer;user-select:none;transition:background .12s}
 .lh:hover{background:var(--bg-card)}
-.ld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.lna{font-size:10px;font-weight:500;flex:1}
-.lcn{font-size:8px;color:var(--text-dim);flex:1;font-style:italic}
-.lct{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--text-dim)}
-.lto{font-size:7px;color:var(--text-dim);transition:transform .2s}
+.ld{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.lna{font-size:13px;font-weight:500;flex:1}
+.lcn{font-size:11px;color:var(--text-dim);flex:1;font-style:italic}
+.lct{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim)}
+.lto{font-size:10px;color:var(--text-dim);transition:transform .2s}
 .lto.open{transform:rotate(90deg)}
-.lr{max-height:0;overflow:hidden;transition:max-height .3s ease;padding-left:18px}
+.lr{max-height:0;overflow:hidden;transition:max-height .3s ease;padding-left:20px}
 .lr.open{max-height:1200px;overflow-y:auto}
-.gh{font-size:8px;color:var(--text-dim);padding:2px 0;font-weight:600;cursor:pointer;user-select:none}
-.ri{display:flex;align-items:center;gap:3px;padding:1px 4px;font-size:8px;color:var(--text-dim);cursor:pointer;border-radius:2px;transition:all .1s;font-family:'JetBrains Mono',monospace}
+.gh{font-size:11px;color:var(--text-dim);padding:3px 0;font-weight:600;cursor:pointer;user-select:none}
+.ri{display:flex;align-items:center;gap:4px;padding:2px 5px;font-size:11px;color:var(--text-dim);cursor:pointer;border-radius:3px;transition:all .1s;font-family:'JetBrains Mono',monospace}
 .ri:hover{background:var(--bg-card);color:var(--text)}
 .ri.sel{color:var(--text-bright);background:rgba(96,165,250,0.08)}
-.rcb{width:8px;height:8px;border:1px solid var(--border);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.rcb{width:11px;height:11px;border:1.5px solid var(--border);border-radius:2px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .ri.sel .rcb{border-color:var(--accent);background:var(--accent)}
-.ri.sel .rcb::after{content:'\2713';font-size:5px;color:var(--bg)}
-.ridx{color:#3b4c6b;min-width:16px;text-align:right;font-size:7px}
-.ei{width:100%;padding:5px 7px;background:var(--bg-card);border:1px solid var(--border);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:9px;border-radius:4px;outline:none}
+.ri.sel .rcb::after{content:'\2713';font-size:7px;color:var(--bg)}
+.ridx{color:#3b4c6b;min-width:20px;text-align:right;font-size:10px}
+.ei{width:100%;padding:6px 9px;background:var(--bg-card);border:1px solid var(--border);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;border-radius:5px;outline:none}
 .ei:focus{border-color:var(--accent)}
-.el{margin-top:3px;max-height:80px;overflow-y:auto}
-.et{display:inline-flex;align-items:center;gap:2px;padding:1px 5px;margin:1px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;font-size:8px;font-family:'JetBrains Mono',monospace;color:var(--text)}
-.et .x{cursor:pointer;color:var(--text-dim);font-size:10px}
+.el{margin-top:4px;max-height:90px;overflow-y:auto}
+.et{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;margin:2px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--text)}
+.et .x{cursor:pointer;color:var(--text-dim);font-size:13px}
 .et .x:hover{color:#ef4444}
 .center{display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 #chord-svg{position:relative;z-index:1}
-.pg{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.pb{padding:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:4px;cursor:pointer;text-align:center;transition:all .15s}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.pb{padding:5px;background:var(--bg-card);border:1px solid var(--border);border-radius:5px;cursor:pointer;text-align:center;transition:all .15s}
 .pb:hover{border-color:var(--accent)}
 .pb.a{border-color:var(--accent);background:var(--accent-glow)}
-.pp{height:20px;border-radius:2px;margin-bottom:2px;display:flex;overflow:hidden}
+.pp{height:24px;border-radius:3px;margin-bottom:3px;display:flex;overflow:hidden}
 .pp div{flex:1}
-.pla{font-size:8px;color:var(--text-dim);font-family:'JetBrains Mono',monospace}
-.sg{margin-bottom:10px}
-.sl{display:flex;justify-content:space-between;font-size:9px;margin-bottom:3px}
+.pla{font-size:10px;color:var(--text-dim);font-family:'JetBrains Mono',monospace}
+.sg{margin-bottom:12px}
+.sl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
 .sl span:last-child{font-family:'JetBrains Mono',monospace;color:var(--accent)}
-input[type="range"]{-webkit-appearance:none;width:100%;height:3px;background:var(--border);border-radius:2px;outline:none}
-input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--accent);cursor:pointer}
-.ic{background:var(--bg-card);border:1px solid var(--border);border-radius:5px;padding:8px;margin-bottom:6px}
-.ic h4{font-size:9px;font-weight:600;margin-bottom:4px;color:var(--text-bright)}
-.ir{display:flex;justify-content:space-between;font-size:8px;padding:1px 0;font-family:'JetBrains Mono',monospace}
+input[type="range"]{-webkit-appearance:none;width:100%;height:4px;background:var(--border);border-radius:2px;outline:none}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);cursor:pointer}
+.ic{background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:8px}
+.ic h4{font-size:12px;font-weight:600;margin-bottom:5px;color:var(--text-bright)}
+.ir{display:flex;justify-content:space-between;font-size:11px;padding:2px 0;font-family:'JetBrains Mono',monospace}
 .ir .la{color:var(--text-dim)}.ir .va{color:var(--text)}
-.tip{position:fixed;background:var(--bg-card);border:1px solid var(--border);border-radius:5px;padding:6px 9px;font-size:9px;pointer-events:none;opacity:0;transition:opacity .1s;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,0.4);max-width:280px}
+.tip{position:fixed;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:12px;pointer-events:none;opacity:0;transition:opacity .1s;z-index:100;box-shadow:0 4px 16px rgba(0,0,0,0.4);max-width:300px}
 .tip.v{opacity:1}
-.tip .tt{font-weight:600;color:var(--text-bright);margin-bottom:2px}
-.tip .ts{color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:7px}
-.br{display:flex;gap:3px;margin-bottom:6px}
-.bs{flex:1;padding:3px 4px;background:var(--bg-card);border:1px solid var(--border);border-radius:3px;color:var(--text-dim);font-size:8px;cursor:pointer;transition:all .1s;font-family:'DM Sans',sans-serif}
+.tip .tt{font-weight:600;color:var(--text-bright);margin-bottom:3px}
+.tip .ts{color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:10px}
+.br{display:flex;gap:4px;margin-bottom:8px}
+.bs{flex:1;padding:5px 6px;background:var(--bg-card);border:1px solid var(--border);border-radius:4px;color:var(--text-dim);font-size:11px;cursor:pointer;transition:all .1s;font-family:'DM Sans',sans-serif}
 .bs:hover{border-color:var(--accent);color:var(--text)}
-.bp{width:100%;padding:7px;background:var(--accent);border:none;border-radius:4px;color:var(--bg);font-size:10px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
-.cpi{width:100%;height:28px;border:1px solid var(--border);border-radius:4px;cursor:pointer;background:transparent;padding:0}
+.bp{width:100%;padding:9px;background:var(--accent);border:none;border-radius:5px;color:var(--bg);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+.cpi{width:100%;height:32px;border:1px solid var(--border);border-radius:5px;cursor:pointer;background:transparent;padding:0}
 </style>
 </head>
 <body>
@@ -128,11 +128,20 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;hei
 </div>
 
 <div class="sec">
-<div class="st">Drawing Style / 绘制风格</div>
+<div class="st" style="margin-top:8px">分隔线 / Separators</div>
 <div class="tr">
-<button class="tb a" id="ds-default" onclick="setDrawStyle('default')">默认</button>
-<button class="tb" id="ds-circos" onclick="setDrawStyle('circos')">Circos经典</button>
+<button class="tb" id="sep-none" onclick="setSep('none')">无</button>
+<button class="tb a" id="sep-line" onclick="setSep('line')">细线分隔</button>
+<button class="tb" id="sep-gap" onclick="setSep('gap')">间隔分隔</button>
 </div>
+<div class="st" style="margin-top:8px">Gyrus 文字颜色</div>
+<div class="tr">
+<button class="tb a" id="gc-auto" onclick="setGyrusColorMode('auto')">自动黑/白</button>
+<button class="tb" id="gc-fixed" onclick="setGyrusColorMode('fixed')">固定颜色</button>
+<button class="tb" id="gc-lobe" onclick="setGyrusColorMode('lobe')">跟随脑区</button>
+</div>
+<input type="color" class="cpi" id="gyrus-def-color" value="#ffffff" onchange="gyrusDefaultColor=this.value;render()" style="display:none">
+<div class="desc">点击圆环上的Gyrus名可单独改色/改名/隐藏</div>
 </div>
 
 <div class="sec">
@@ -143,15 +152,19 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;hei
 
 <div class="sec">
 <div class="st">Import Data / 导入数据</div>
-<div class="desc">上传 FC 矩阵 (CSV/TXT, N×N) 或 边列表 (每行: i,j,weight)</div>
-<div style="display:flex;gap:4px;margin-bottom:5px">
+<div class="desc">上传 FC 矩阵 (CSV/TXT, N×N)、边列表 (i,j,weight)、或 Circos link 文件</div>
+<div style="display:flex;gap:4px;margin-bottom:5px;flex-wrap:wrap">
 <label class="bs" style="text-align:center;cursor:pointer;flex:1;position:relative;overflow:hidden">
-上传 FC 矩阵
+FC 矩阵
 <input type="file" accept=".csv,.txt,.tsv" onchange="loadFCMatrix(this)" style="position:absolute;opacity:0;width:100%;height:100%;top:0;left:0;cursor:pointer">
 </label>
 <label class="bs" style="text-align:center;cursor:pointer;flex:1;position:relative;overflow:hidden">
-上传边列表
+边列表
 <input type="file" accept=".csv,.txt,.tsv,.edgelist" onchange="loadEdgeList(this)" style="position:absolute;opacity:0;width:100%;height:100%;top:0;left:0;cursor:pointer">
+</label>
+<label class="bs" style="text-align:center;cursor:pointer;flex:1;position:relative;overflow:hidden">
+Circos Link
+<input type="file" accept=".txt,.conf,.link" onchange="loadCircosLink(this)" style="position:absolute;opacity:0;width:100%;height:100%;top:0;left:0;cursor:pointer">
 </label>
 </div>
 <div class="desc" id="upload-status" style="color:var(--accent)"></div>
@@ -159,6 +172,20 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;hei
 <button class="bs" onclick="resetFC()" style="flex:1">重置为随机FC</button>
 <button class="bs" onclick="exportFC()" style="flex:1">导出当前FC</button>
 </div>
+</div>
+
+<div class="sec">
+<div class="st">Reorder / 脑区排列</div>
+<div class="desc">选择一个 Gyrus 移动到目标位置（按 Gyrus 级别排列）</div>
+<div style="display:flex;gap:4px;margin-bottom:5px">
+<select class="ctrl" id="reorder-src" style="flex:1"><option value="">选择脑区...</option></select>
+<select class="ctrl" id="reorder-dst" style="flex:1"><option value="">移到...之前</option></select>
+</div>
+<div style="display:flex;gap:4px">
+<button class="bs" onclick="applyReorder()" style="flex:1">移动</button>
+<button class="bs" onclick="resetOrder()" style="flex:1">重置顺序</button>
+</div>
+<div class="desc" id="reorder-status"></div>
 </div>
 
 <div class="sec">
@@ -186,6 +213,8 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;hei
 <div class="sec">
 <div class="st">自定义</div>
 <div class="sg"><div class="sl"><span>背景颜色</span></div><input type="color" class="cpi" id="bg-color" value="#0a0e17" onchange="setBg(this.value)"></div>
+<div class="sg"><div class="sl"><span>颜色深度</span><span id="ci-val">0</span></div><input type="range" min="-80" max="80" value="0" oninput="COLOR_SHIFT=+this.value;$('ci-val').textContent=(COLOR_SHIFT>0?'+':'')+COLOR_SHIFT;render()"></div>
+<div class="desc">负值变深，正值变亮。配色预设栏不受影响。</div>
 </div>
 <div class="sec">
 <div class="st">Edge Filter / 边筛选</div>
@@ -226,8 +255,10 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;hei
 <div class="st">Parameters</div>
 <div class="sg"><div class="sl"><span>连接透明度</span><span id="ov">0.45</span></div><input type="range" min="5" max="95" value="45" oninput="OP=this.value/100;$('ov').textContent=OP.toFixed(2);render()"></div>
 <div class="sg"><div class="sl"><span>弧间距</span><span id="pv">0.02</span></div><input type="range" min="1" max="15" value="2" oninput="PAD=this.value/100;$('pv').textContent=PAD.toFixed(2);render()"></div>
-<div class="sg"><div class="sl"><span>圆环宽度</span><span id="rw">14</span></div><input type="range" min="4" max="80" value="14" oninput="RW=+this.value;$('rw').textContent=RW;render()"></div>
+<div class="sg"><div class="sl"><span>圆环宽度</span><span id="rw">14</span></div><input type="range" min="4" max="100" value="14" oninput="RW=+this.value;$('rw').textContent=RW;render()"></div>
 <div class="sg"><div class="sl"><span>线条粗细</span><span id="lw">1.5</span></div><input type="range" min="2" max="60" value="15" oninput="LW=this.value/10;$('lw').textContent=LW.toFixed(1);render()"></div>
+<div class="sg"><div class="sl"><span>Gyrus字号</span><span id="gfs">0</span></div><input type="range" min="0" max="30" value="0" oninput="GFS=+this.value;$('gfs').textContent=GFS||'自动';render()"></div>
+<div class="sg"><div class="sl"><span>旋转角度</span><span id="rot-val">0°</span></div><input type="range" min="0" max="360" value="0" oninput="ROT=+this.value;$('rot-val').textContent=ROT+'°';render()"></div>
 </div>
 <div class="sec"><div class="st">Info</div><div class="ic" id="info"><h4>Hover</h4><div class="ir"><span class="la">悬停脑区查看详情</span></div></div></div>
 <div class="sec"><button class="bp" onclick="exportSVG()">导出 SVG</button></div>
@@ -235,13 +266,26 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;hei
 </div>
 <div class="tip" id="tip"></div>
 <div id="edge-picker" style="position:fixed;display:none;z-index:200;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:8px;box-shadow:0 8px 32px rgba(0,0,0,0.5)">
-<div style="font-size:8px;color:var(--text-dim);margin-bottom:4px;font-family:'JetBrains Mono',monospace" id="ep-label">Edge</div>
+<div style="font-size:10px;color:var(--text-dim);margin-bottom:4px;font-family:'JetBrains Mono',monospace" id="ep-label">Edge</div>
 <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:5px" id="ep-swatches"></div>
 <input type="color" id="ep-custom" style="width:100%;height:24px;border:none;cursor:pointer;border-radius:3px">
 <div style="display:flex;gap:3px;margin-top:4px">
-<button class="bs" onclick="applyEdgePickerColor()" style="flex:1;font-size:8px">应用</button>
-<button class="bs" onclick="removeEdgeColor()" style="flex:1;font-size:8px">恢复默认</button>
-<button class="bs" onclick="closeEdgePicker()" style="flex:1;font-size:8px">关闭</button>
+<button class="bs" onclick="applyEdgePickerColor()" style="flex:1">应用</button>
+<button class="bs" onclick="removeEdgeColor()" style="flex:1">恢复默认</button>
+<button class="bs" onclick="closeEdgePicker()" style="flex:1">关闭</button>
+</div>
+</div>
+<div id="gyrus-picker" style="position:fixed;display:none;z-index:200;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:10px;box-shadow:0 8px 32px rgba(0,0,0,0.5);min-width:180px">
+<div style="font-size:10px;color:var(--text-dim);margin-bottom:5px;font-family:'JetBrains Mono',monospace" id="gp-label">Gyrus</div>
+<div style="font-size:11px;margin-bottom:4px;color:var(--text)">名称:</div>
+<input id="gp-name-input" class="ei" style="margin-bottom:6px" placeholder="自定义名称">
+<div style="font-size:11px;margin-bottom:4px;color:var(--text)">颜色:</div>
+<input type="color" id="gp-color-input" style="width:100%;height:28px;border:none;cursor:pointer;border-radius:3px;margin-bottom:6px">
+<div style="display:flex;gap:3px">
+<button class="bs" onclick="applyGyrusPicker()" style="flex:1">应用</button>
+<button class="bs" onclick="hideGyrusText()" style="flex:1">隐藏</button>
+<button class="bs" onclick="resetGyrusText()" style="flex:1">重置</button>
+<button class="bs" onclick="closeGyrusPicker()" style="flex:1">关闭</button>
 </div>
 </div>
 <script>
@@ -314,10 +358,10 @@ function switchAtlas(key){
   fullFC=genFC(allR.length);
   selSet.clear();
   manualEdges=[];renderET();
-  // Default select some regions
+  origAllR=null;origFC=null;
   const step=Math.max(1,Math.floor(allR.length/20));
   for(let i=0;i<allR.length;i+=step) selSet.add(i);
-  buildRegionList();updUI();render();
+  buildRegionList();buildReorderDropdowns();updUI();render();
 }
 
 
@@ -335,8 +379,14 @@ const SCHEMES={
 
 let curScheme='neon';
 function getColor(lobe){
-  if(curAtlasKey==='bna246') return SCHEMES[curScheme].colors[lobe]||NET_COLORS[lobe]||'#888';
-  return NET_COLORS[lobe]||SCHEMES[curScheme].colors[lobe]||'#888';
+  let base;
+  if(curAtlasKey==='bna246') base=SCHEMES[curScheme].colors[lobe]||NET_COLORS[lobe]||'#888';
+  else base=NET_COLORS[lobe]||SCHEMES[curScheme].colors[lobe]||'#888';
+  if(COLOR_SHIFT===0) return base;
+  const c=d3.color(base);
+  if(!c) return base;
+  if(COLOR_SHIFT<0) return c.darker(-COLOR_SHIFT/40).formatHex();
+  return c.brighter(COLOR_SHIFT/40).formatHex();
 }
 
 // ===== BUILD FLAT ATLAS =====
@@ -350,22 +400,25 @@ let allR=[], lobeSpans=[], gyrusSpans=[];
 
 // ===== STATE =====
 let selSet=new Set(), labelMode='gyrus', gyrusOnRing=true, showIdx=true;
-let TH=0.30, OP=0.45, PAD=0.02, RW=14, LW=1.5;
+let TH=0.30, OP=0.45, PAD=0.02, RW=14, LW=1.5, GFS=0, COLOR_SHIFT=0, ROT=0;
 let manualEdges=[], fullFC=null, bgColor='#0a0e17';
 let edgeFilterMode='threshold', TOPN=20, topDir='strong';
 let curTheme='dark';
-let drawStyle='default';
+let sepMode='line'; // 'none', 'line', 'gap'
+let gyrusColorMode='auto'; // 'auto', 'fixed', 'lobe'
+let gyrusDefaultColor='#ffffff';
+let gyrusOverrides={}; // key: gyrus index => {color, name, hidden}
 let edgeColors={}; // key: 's-t' => color string
 let edgeColorMode='auto'; // 'auto' = follow region color, 'fixed' = use edgeDefaultColor
 let edgeDefaultColor='#ff4444';
 let pickerEdgeKey=null; // currently open picker edge
 
-const QUICK_COLORS=['#ef4444','#f97316','#eab308','#22c55e','#06b6d4','#3b82f6','#8b5cf6','#ec4899','#000000','#ffffff']; // 'default' or 'circos'
+const QUICK_COLORS=['#ef4444','#f97316','#eab308','#22c55e','#06b6d4','#3b82f6','#8b5cf6','#ec4899','#000000','#ffffff'];
 
 function genFC(n){let s=42;const r=()=>{s=(s*16807)%2147483647;return(s-1)/2147483646};const m=Array.from({length:n},()=>Array(n).fill(0));for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){const v=r()*0.8-0.1;m[i][j]=v;m[j][i]=v;}return m;}
 fullFC=genFC(allR.length);
 
-function init(){buildRegionList();buildPresets();buildQuickColors();
+function init(){buildRegionList();buildPresets();buildQuickColors();buildReorderDropdowns();
   [0,1,14,15,28,29,68,69,124,125,162,163,174,175,188,189,210,211,230,231].forEach(i=>selSet.add(i));
   updUI();render();
 }
@@ -379,25 +432,12 @@ function setTheme(t){
   curTheme=t;
   $('thm-dark').classList.toggle('a',t==='dark');
   $('thm-light').classList.toggle('a',t==='light');
-  const root=document.documentElement.style;
   if(t==='light'){
-    root.setProperty('--bg','#f5f5f5');root.setProperty('--bg-panel','#ffffff');
-    root.setProperty('--bg-card','#f0f0f0');root.setProperty('--border','#d0d0d0');
-    root.setProperty('--text','#1a1a1a');root.setProperty('--text-dim','#666666');
-    root.setProperty('--text-bright','#000000');root.setProperty('--accent','#2563eb');
-    root.setProperty('--accent-glow','rgba(37,99,235,0.1)');
     bgColor='#ffffff';
-    document.body.style.background='#f5f5f5';
     document.querySelector('.center').style.background='#ffffff';
     $('bg-color').value='#ffffff';
   } else {
-    root.setProperty('--bg','#0a0e17');root.setProperty('--bg-panel','#111827');
-    root.setProperty('--bg-card','#1a2236');root.setProperty('--border','#2a3654');
-    root.setProperty('--text','#e2e8f0');root.setProperty('--text-dim','#64748b');
-    root.setProperty('--text-bright','#f8fafc');root.setProperty('--accent','#60a5fa');
-    root.setProperty('--accent-glow','rgba(96,165,250,0.15)');
     bgColor='#0a0e17';
-    document.body.style.background='#0a0e17';
     document.querySelector('.center').style.background='#0a0e17';
     $('bg-color').value='#0a0e17';
   }
@@ -421,12 +461,69 @@ function setTopDir(d){
   render();
 }
 
-function setDrawStyle(s){
-  drawStyle=s;
-  $('ds-default').classList.toggle('a',s==='default');
-  $('ds-circos').classList.toggle('a',s==='circos');
+function setSep(m){
+  sepMode=m;
+  $('sep-none').classList.toggle('a',m==='none');
+  $('sep-line').classList.toggle('a',m==='line');
+  $('sep-gap').classList.toggle('a',m==='gap');
   render();
 }
+
+function setGyrusColorMode(m){
+  gyrusColorMode=m;
+  $('gc-auto').classList.toggle('a',m==='auto');
+  $('gc-fixed').classList.toggle('a',m==='fixed');
+  $('gc-lobe').classList.toggle('a',m==='lobe');
+  $('gyrus-def-color').style.display=m==='fixed'?'block':'none';
+  render();
+}
+
+function getGyrusColor(gi, lobeColor){
+  if(gyrusOverrides[gi]?.color) return gyrusOverrides[gi].color;
+  if(gyrusColorMode==='fixed') return gyrusDefaultColor;
+  if(gyrusColorMode==='lobe') return lobeColor;
+  return curTheme==='light'?'#000':'#fff';
+}
+
+function getGyrusName(gi, defaultName){
+  if(gyrusOverrides[gi]?.hidden) return '';
+  if(gyrusOverrides[gi]?.name!==undefined) return gyrusOverrides[gi].name;
+  return defaultName;
+}
+
+// Gyrus text click-to-edit popup
+let pickerGyrusIdx=null;
+function openGyrusPicker(event, gi, name, lobeColor){
+  pickerGyrusIdx=gi;
+  const ep=$('gyrus-picker');
+  ep.style.display='block';
+  ep.style.left=(event.clientX+10)+'px';
+  ep.style.top=(event.clientY+10)+'px';
+  $('gp-name-input').value=getGyrusName(gi,name)||name;
+  $('gp-color-input').value=gyrusOverrides[gi]?.color||getGyrusColor(gi,lobeColor);
+  $('gp-label').textContent=name;
+}
+function applyGyrusPicker(){
+  if(pickerGyrusIdx===null)return;
+  const ov=gyrusOverrides[pickerGyrusIdx]||{};
+  ov.name=$('gp-name-input').value;
+  ov.color=$('gp-color-input').value;
+  ov.hidden=false;
+  gyrusOverrides[pickerGyrusIdx]=ov;
+  closeGyrusPicker();render();
+}
+function hideGyrusText(){
+  if(pickerGyrusIdx===null)return;
+  const ov=gyrusOverrides[pickerGyrusIdx]||{};
+  ov.hidden=true;
+  gyrusOverrides[pickerGyrusIdx]=ov;
+  closeGyrusPicker();render();
+}
+function resetGyrusText(){
+  if(pickerGyrusIdx!==null) delete gyrusOverrides[pickerGyrusIdx];
+  closeGyrusPicker();render();
+}
+function closeGyrusPicker(){$('gyrus-picker').style.display='none';pickerGyrusIdx=null;}
 
 function edgeKey(s,t){return Math.min(s,t)+'-'+Math.max(s,t);}
 
@@ -434,8 +531,6 @@ function getEdgeColor(d,ad){
   const k=edgeKey(d.s,d.t);
   if(edgeColors[k]) return edgeColors[k];
   if(edgeColorMode==='fixed') return edgeDefaultColor;
-  const isCir=drawStyle==='circos';
-  if(isCir) return curTheme==='light'?'#222':'#ccc';
   return ad[d.s].color;
 }
 
@@ -504,6 +599,144 @@ function buildQuickColors(){
     b.title=c;
     el.appendChild(b);
   });
+}
+
+// ===== REORDER =====
+// gyrusOrder: array of gyrus keys in display order, e.g. ['Frontal Lobe|SFG', 'Frontal Lobe|MFG', ...]
+let gyrusOrder=null; // null = default order
+let origAllR=null;   // original allR before reorder
+let origFC=null;     // original FC
+
+function getGyrusGroups(){
+  // Returns array of {key, name, lobeShort, indices:[originalIndices]}
+  const groups=[];
+  const src=origAllR||allR;
+  let curKey=null;
+  src.forEach((r,i)=>{
+    const k=r.lobe+'|'+r.gs;
+    if(k!==curKey){
+      groups.push({key:k, name:r.gs, lobe:r.lobe, indices:[]});
+      curKey=k;
+    }
+    groups[groups.length-1].indices.push(i);
+  });
+  return groups;
+}
+
+function buildReorderDropdowns(){
+  const groups=getGyrusGroups();
+  const src=$('reorder-src'), dst=$('reorder-dst');
+  src.innerHTML='<option value="">选择脑区...</option>';
+  dst.innerHTML='<option value="">移到...之前</option><option value="__end__">移到最后</option>';
+  groups.forEach((g,i)=>{
+    const label=`${g.name} (${g.lobe})`;
+    src.innerHTML+=`<option value="${i}">${label}</option>`;
+    dst.innerHTML+=`<option value="${i}">${label}</option>`;
+  });
+}
+
+function applyReorder(){
+  const srcIdx=+$('reorder-src').value;
+  const dstVal=$('reorder-dst').value;
+  if(isNaN(srcIdx)||dstVal===''){$('reorder-status').textContent='请选择源和目标';return;}
+
+  const groups=getGyrusGroups();
+  if(srcIdx<0||srcIdx>=groups.length) return;
+
+  // Save originals on first reorder
+  if(!origAllR){origAllR=[...allR];origFC=fullFC;}
+
+  // Build new order: remove src, insert before dst
+  const order=[...Array(groups.length).keys()];
+  order.splice(srcIdx,1);
+  if(dstVal==='__end__'){
+    order.push(srcIdx);
+  } else {
+    let dstIdx=+dstVal;
+    // Adjust dstIdx if it was after srcIdx
+    if(dstIdx>srcIdx) dstIdx--;
+    order.splice(dstIdx,0,srcIdx);
+  }
+
+  // Rebuild allR in new order, maintaining original ID mapping
+  const origSrc=origAllR||allR;
+  const newAllR=[];
+  const oldToNew={}; // original index -> new index
+  order.forEach(gi=>{
+    groups[gi].indices.forEach(origIdx=>{
+      oldToNew[origIdx]=newAllR.length;
+      newAllR.push({...origSrc[origIdx]});
+    });
+  });
+
+  // Rebuild FC matrix in new order
+  const n=newAllR.length;
+  const srcFC=origFC||fullFC;
+  const newFC=Array.from({length:n},()=>Array(n).fill(0));
+  for(let i=0;i<n;i++){
+    for(let j=0;j<n;j++){
+      // Find original indices for display positions i and j
+      const oi=groups[order[0]]?undefined:undefined; // need reverse map
+    }
+  }
+  // Simpler: iterate original pairs
+  for(let oi=0;oi<n;oi++){
+    for(let oj=0;oj<n;oj++){
+      if(oldToNew[oi]!==undefined && oldToNew[oj]!==undefined){
+        newFC[oldToNew[oi]][oldToNew[oj]]=srcFC[oi][oj];
+      }
+    }
+  }
+
+  allR=newAllR;
+  fullFC=newFC;
+
+  // Remap selSet
+  const newSel=new Set();
+  selSet.forEach(oi=>{if(oldToNew[oi]!==undefined)newSel.add(oldToNew[oi]);});
+  selSet=newSel;
+
+  // Remap manual edges
+  manualEdges=manualEdges.map(e=>[oldToNew[e[0]],oldToNew[e[1]]]).filter(e=>e[0]!==undefined&&e[1]!==undefined);
+  renderET();
+
+  // Remap edge colors
+  const newEdgeColors={};
+  Object.entries(edgeColors).forEach(([k,v])=>{
+    const [a,b]=k.split('-').map(Number);
+    if(oldToNew[a]!==undefined&&oldToNew[b]!==undefined){
+      newEdgeColors[edgeKey(oldToNew[a],oldToNew[b])]=v;
+    }
+  });
+  edgeColors=newEdgeColors;
+
+  // Rebuild spans
+  const spans=buildSpans(allR);
+  lobeSpans=spans.lobeSpans;
+  gyrusSpans=spans.gyrusSpans;
+
+  const srcG=groups[srcIdx];
+  $('reorder-status').textContent=`已移动 ${srcG.name}`;
+  buildRegionList();buildReorderDropdowns();updUI();render();
+}
+
+function resetOrder(){
+  if(origAllR){
+    allR=[...origAllR];
+    fullFC=origFC;
+    origAllR=null;origFC=null;
+    const spans=buildSpans(allR);
+    lobeSpans=spans.lobeSpans;
+    gyrusSpans=spans.gyrusSpans;
+    // Reset selections to safe defaults
+    selSet.clear();
+    const step=Math.max(1,Math.floor(allR.length/20));
+    for(let i=0;i<allR.length;i+=step) selSet.add(i);
+    manualEdges=[];renderET();
+    edgeColors={};
+    $('reorder-status').textContent='已重置为默认顺序';
+    buildRegionList();buildReorderDropdowns();updUI();render();
+  }
 }
 
 function buildRegionList(){
@@ -590,13 +823,13 @@ function render(){
   svg.attr('width',size).attr('height',size).attr('viewBox',`0 0 ${size} ${size}`);
   const g=svg.append('g').attr('transform',`translate(${size/2},${size/2})`);
 
-  const isCirocs=drawStyle==='circos';
-  const gyrusGap=isCirocs?0.06:0; // gap between gyri in circos mode
-  const lobeGap=isCirocs?0.12:0;  // larger gap between lobes
+  const useGaps=sepMode==='gap';
+  const gyrusGap=useGaps?0.06:0;
+  const lobeGap=useGaps?0.12:0;
 
   // Calculate total gap space
   let totalGap=0;
-  if(isCirocs){
+  if(useGaps){
     totalGap=lobeSpans.length*lobeGap;
     gyrusSpans.forEach((gs,i)=>{
       if(i>0 && allR[gs.si].lobe===allR[gs.si>0?gs.si-1:0]?.lobe) totalGap+=gyrusGap;
@@ -606,13 +839,12 @@ function render(){
   const pad=PAD, totalPad=pad*n+totalGap;
   const arcSpan=(2*Math.PI-totalPad)/n;
 
-  // Build arc data with circos-style gaps
+  // Build arc data with gaps if enabled
   const ad=[];
-  let curAngle=0;
+  let curAngle=ROT*Math.PI/180; // rotation offset in radians
   let prevLobe=null, prevGyrus=null;
   allR.forEach((r,i)=>{
-    // Insert gaps before this region
-    if(isCirocs && i>0){
+    if(useGaps && i>0){
       const curLobeKey=r.lobe;
       const curGyrusKey=r.lobe+'|'+r.gs;
       if(curLobeKey!==prevLobe) curAngle+=lobeGap;
@@ -629,23 +861,21 @@ function render(){
   const arcGen=d3.arc().innerRadius(innerR).outerRadius(outerR);
 
   // ===== ARCS =====
-  const arcStrokeW=isCirocs?0.8:0.15;
-  const arcStrokeColor=d=>isCirocs?(curTheme==='light'?'#333':'#888'):d3.color(d.color).darker(0.3);
   const arcs=g.append('g').selectAll('path').data(ad).join('path')
     .attr('d',d=>arcGen({startAngle:d.sa,endAngle:d.ea}))
-    .attr('fill',d=>d.color).attr('fill-opacity',d=>selSet.has(d.idx)?1:isCirocs?0.3:0.15)
-    .attr('stroke',arcStrokeColor).attr('stroke-width',arcStrokeW)
+    .attr('fill',d=>d.color).attr('fill-opacity',d=>selSet.has(d.idx)?1:0.2)
+    .attr('stroke',d=>d3.color(d.color).darker(0.3)).attr('stroke-width',0.3)
     .style('cursor','pointer');
 
-  // ===== SEPARATORS (only in default mode, circos uses gaps) =====
-  if(!isCirocs){
+  // ===== SEPARATORS =====
+  if(sepMode==='line'){
     lobeSpans.forEach((ls,i)=>{
       if(i>0){
         const angle=ad[ls.si].sa-pad/2-Math.PI/2;
         g.append('line')
           .attr('x1',Math.cos(angle)*(innerR-2)).attr('y1',Math.sin(angle)*(innerR-2))
           .attr('x2',Math.cos(angle)*(outerR+1)).attr('y2',Math.sin(angle)*(outerR+1))
-          .attr('stroke',curTheme==='light'?'#999':'#475569').attr('stroke-width',0.6);
+          .attr('stroke',curTheme==='light'?'#999':'#475569').attr('stroke-width',0.8);
       }
     });
     gyrusSpans.forEach((gs,i)=>{
@@ -654,7 +884,7 @@ function render(){
         g.append('line')
           .attr('x1',Math.cos(angle)*(innerR)).attr('y1',Math.sin(angle)*(innerR))
           .attr('x2',Math.cos(angle)*(outerR)).attr('y2',Math.sin(angle)*(outerR))
-          .attr('stroke',curTheme==='light'?'#bbb':'#334155').attr('stroke-width',0.3);
+          .attr('stroke',curTheme==='light'?'#bbb':'#334155').attr('stroke-width',0.4);
       }
     });
   }
@@ -663,29 +893,37 @@ function render(){
 
   // ===== GYRUS NAME ON RING (like reference image) =====
   if(gyrusOnRing){
+    let gyrusFontSize=GFS;
+    if(gyrusFontSize===0){
+      let minSpan=Infinity;
+      gyrusSpans.forEach(gs=>{
+        const span=ad[gs.ei].ea-ad[gs.si].sa;
+        if(span<minSpan) minSpan=span;
+      });
+      gyrusFontSize=Math.max(5, Math.min(RW-2, minSpan*outerR*0.5, 14));
+    }
     gyrusSpans.forEach((gs,i)=>{
+      const displayName=getGyrusName(i, gs.name);
+      if(!displayName) return; // hidden
       const sa=ad[gs.si].sa, ea=ad[gs.ei].ea;
       const midA=(sa+ea)/2;
       const midR=(innerR+outerR)/2;
-      // Position text at center of arc, rotated so head points toward center
       const angle=midA*180/Math.PI-90;
       const x=Math.cos(midA-Math.PI/2)*midR;
       const y=Math.sin(midA-Math.PI/2)*midR;
-      // Always rotate so text head points toward center (add 180 if in top half)
       let rot=angle;
       if(midA>Math.PI) rot=angle+180;
-      const spanAngle=ea-sa;
-      const maxFS=Math.min(RW-2, spanAngle*outerR*0.6);
-      const fs=Math.max(4, Math.min(maxFS, 12));
+      const lobeColor=ad[gs.si].color;
       g.append('text')
         .attr('x',x).attr('y',y)
         .attr('transform',`rotate(${rot},${x},${y})`)
         .attr('text-anchor','middle').attr('dominant-baseline','central')
         .attr('font-family','DM Sans,sans-serif').attr('font-weight','700')
-        .attr('font-size',fs+'px')
-        .attr('fill',curTheme==='light'?'#000':'#fff').attr('fill-opacity',0.9)
-        .attr('pointer-events','none')
-        .text(gs.name);
+        .attr('font-size',gyrusFontSize+'px')
+        .attr('fill',getGyrusColor(i, lobeColor)).attr('fill-opacity',0.9)
+        .style('cursor','pointer')
+        .on('click',function(event){event.stopPropagation();openGyrusPicker(event,i,gs.name,lobeColor);})
+        .text(displayName);
     });
   }
 
@@ -769,8 +1007,8 @@ function render(){
 
   $('stats').textContent=`${n} \u00b7 ${selSet.size} sel \u00b7 ${conns.length} edges`;
 
-  // Bezier radius factor: default pulls toward center, circos stays flat near edge
-  const bzR=isCirocs?0.1:0.3;
+  // Bezier radius factor
+  const bzR=0.3;
 
   const ribbons=g.append('g').selectAll('path').data(conns).join('path')
     .attr('d',d=>{
@@ -805,7 +1043,7 @@ function render(){
   })
   .on('mousemove',e=>{tip.style.left=(e.clientX+10)+'px';tip.style.top=(e.clientY-8)+'px';})
   .on('mouseleave',()=>{
-    arcs.attr('fill-opacity',d=>selSet.has(d.idx)?1:isCirocs?0.3:0.15);
+    arcs.attr('fill-opacity',d=>selSet.has(d.idx)?1:0.2);
     ribbons.attr('stroke-opacity',OP).attr('stroke-width',LW);
     tip.classList.remove('v');
   })
@@ -940,6 +1178,75 @@ function loadEdgeList(input){
   input.value='';
 }
 
+function loadCircosLink(input){
+  const file=input.files[0];if(!file)return;
+  const status=$('upload-status');
+  status.textContent='读取 Circos link 文件...';
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const lines=e.target.result.trim().split(/\r?\n/).filter(l=>l.trim()&&!l.trim().startsWith('#'));
+      // Format: hs33 20000 800000 hs69 20000 800000 color=170,170,170 value=0.027472
+      const n=allR.length;
+      fullFC=Array.from({length:n},()=>Array(n).fill(0));
+      selSet.clear();
+      edgeColors={};
+      let edgeCount=0, colorCount=0;
+
+      lines.forEach(line=>{
+        // Parse: extract hs numbers, color, value
+        const parts=line.trim().split(/\s+/);
+        if(parts.length<6) return;
+        // First token: hs33 -> extract 33
+        const m1=parts[0].match(/hs(\d+)/i);
+        const m2=parts[3].match(/hs(\d+)/i);
+        if(!m1||!m2) return;
+        const id1=parseInt(m1[1])-1; // 1-indexed hs -> 0-indexed
+        const id2=parseInt(m2[1])-1;
+        if(id1<0||id1>=n||id2<0||id2>=n||id1===id2) return;
+
+        // Extract value
+        let val=1;
+        const valMatch=line.match(/value=([\d.\-+eE]+)/);
+        if(valMatch) val=parseFloat(valMatch[1]);
+
+        fullFC[id1][id2]=val;
+        fullFC[id2][id1]=val;
+        selSet.add(id1);
+        selSet.add(id2);
+        edgeCount++;
+
+        // Extract color=r,g,b and apply as edge color
+        const colorMatch=line.match(/color=(\d+),(\d+),(\d+)/);
+        if(colorMatch){
+          const r=parseInt(colorMatch[1]),g=parseInt(colorMatch[2]),b=parseInt(colorMatch[3]);
+          const hex='#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+          edgeColors[edgeKey(Math.min(id1,id2),Math.max(id1,id2))]=hex;
+          colorCount++;
+        }
+      });
+
+      // Auto threshold: set to slightly below min value so all edges show
+      let minV=Infinity;
+      for(let i=0;i<n;i++)for(let j=i+1;j<n;j++){
+        if(fullFC[i][j]!==0) minV=Math.min(minV,Math.abs(fullFC[i][j]));
+      }
+      if(minV!==Infinity) TH=minV*0.9;
+      else TH=0;
+      $('tv').textContent=TH.toFixed(4);
+
+      status.textContent=`✓ Circos link: ${edgeCount} edges, ${colorCount} with color (${file.name})`;
+      status.style.color='#34d399';
+      updUI();render();
+    }catch(err){
+      status.textContent='错误: '+err.message;
+      status.style.color='#ef4444';
+    }
+  };
+  reader.readAsText(file);
+  input.value='';
+}
+
 function resetFC(){
   fullFC=genFC(allR.length);
   $('upload-status').textContent='已重置为随机FC';
@@ -972,7 +1279,7 @@ function exportSVG(){
 }
 
 window.addEventListener('resize',()=>render());
-document.addEventListener('click',e=>{if(!$('edge-picker').contains(e.target))closeEdgePicker();});
+document.addEventListener('click',e=>{if(!$('edge-picker').contains(e.target))closeEdgePicker();if(!$('gyrus-picker').contains(e.target))closeGyrusPicker();});
 init();
 </script>
 </body>
