@@ -131,8 +131,8 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;hei
 <div class="st" style="margin-top:8px">分隔线 / Separators</div>
 <div class="tr">
 <button class="tb" id="sep-none" onclick="setSep('none')">无</button>
-<button class="tb a" id="sep-line" onclick="setSep('line')">细线分隔</button>
-<button class="tb" id="sep-gap" onclick="setSep('gap')">间隔分隔</button>
+<button class="tb" id="sep-line" onclick="setSep('line')">细线分隔</button>
+<button class="tb a" id="sep-gap" onclick="setSep('gap')">间隔分隔</button>
 </div>
 <div class="st" style="margin-top:8px">Gyrus 文字颜色</div>
 <div class="tr">
@@ -404,7 +404,7 @@ let TH=0.30, OP=0.45, PAD=0.02, RW=76, LW=1.5, GFS=18, COLOR_SHIFT=0, ROT=0;
 let manualEdges=[], fullFC=null, bgColor='#0a0e17';
 let edgeFilterMode='threshold', TOPN=20, topDir='strong';
 let curTheme='dark';
-let sepMode='line'; // 'none', 'line', 'gap'
+let sepMode='gap'; // 'none', 'line', 'gap'
 let gyrusColorMode='auto'; // 'auto', 'fixed', 'lobe'
 let gyrusDefaultColor='#ffffff';
 let gyrusOverrides={}; // key: gyrus index => {color, name, hidden}
