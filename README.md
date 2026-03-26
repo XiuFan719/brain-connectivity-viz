@@ -8,7 +8,7 @@
 
 [![Version](https://img.shields.io/badge/version-1.0-blue)]()
 [![License](https://img.shields.io/badge/license-MIT-green)]()
-[![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen)](https://YOUR_USERNAME.github.io/brain-connectivity-viz/)
+[![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen)](https://XiuFan719.github.io/brain-connectivity-viz/)
 
 ---
 
@@ -53,7 +53,7 @@
 
 ### Online / 在线使用
 
-访问: **https://YOUR_USERNAME.github.io/brain-connectivity-viz/**
+访问: **https://XiuFan719.github.io/brain-connectivity-viz/**
 
 ### Local / 本地使用
 
@@ -109,11 +109,11 @@ MIT License — 学术和商业用途均可自由使用。
 
 ## 📝 Citation
 
-如果 BrainRing 对你的研究有帮助，欢迎引用：
+如果 BrainRing 对你的研究有帮助，欢迎Star：
 
 ```
 BrainRing: Interactive Brain Connectivity Chord Diagram Visualizer
-https://github.com/YOUR_USERNAME/brain-connectivity-viz
+https://github.com/XiuFan719/brain-connectivity-viz
 ```
 
 ---
