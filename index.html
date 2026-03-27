@@ -265,16 +265,22 @@ Circos Link
 <div class="st">Parameters</div>
 <div class="sg"><div class="sl"><span>圆环大小</span><span id="cs-val">100%</span></div><input type="range" min="30" max="100" value="100" oninput="CSIZE=+this.value;$('cs-val').textContent=CSIZE+'%';render()"></div>
 <div class="sg"><div class="sl"><span>连接透明度</span><span id="ov">0.45</span></div><input type="range" min="5" max="95" value="45" oninput="OP=this.value/100;$('ov').textContent=OP.toFixed(2);render()"></div>
-<div class="sg"><div class="sl"><span>弧间距</span><span id="pv">0.02</span></div><input type="range" min="1" max="15" value="2" oninput="PAD=this.value/100;$('pv').textContent=PAD.toFixed(2);render()"></div>
+<div class="sg"><div class="sl"><span>弧间距</span><span id="pv">0.04</span></div><input type="range" min="1" max="15" value="4" oninput="PAD=this.value/100;$('pv').textContent=PAD.toFixed(2);render()"></div>
 <div class="sg"><div class="sl"><span>圆环宽度</span><span id="rw">76</span></div><input type="range" min="4" max="100" value="76" oninput="RW=+this.value;$('rw').textContent=RW;render()"></div>
 <div class="sg"><div class="sl"><span>线条粗细</span><span id="lw">1.5</span></div><input type="range" min="2" max="60" value="15" oninput="LW=this.value/10;$('lw').textContent=LW.toFixed(1);render()"></div>
 <div class="sg"><div class="sl"><span>Gyrus字号</span><span id="gfs">18</span></div><input type="range" min="0" max="30" value="18" oninput="GFS=+this.value;$('gfs').textContent=GFS||'自动';render()"></div>
 <div class="sg"><div class="sl"><span>旋转角度</span><span id="rot-val">0°</span></div><input type="range" min="0" max="360" value="0" oninput="ROT=+this.value;$('rot-val').textContent=ROT+'°';render()"></div>
 <div class="sg"><div class="sl"><span>选中脑区加深</span></div>
 <div class="tr">
-<button class="tb a" id="hl-on" onclick="setHighlight(true)">加深</button>
-<button class="tb" id="hl-off" onclick="setHighlight(false)">不加深</button>
+<button class="tb" id="hl-on" onclick="setHighlight(true)">加深</button>
+<button class="tb a" id="hl-off" onclick="setHighlight(false)">不加深</button>
 </div></div>
+<div class="sg"><div class="sl"><span>弧段描边</span><span id="asw-val">0</span></div>
+<input type="range" min="0" max="30" value="0" oninput="ARC_STROKE_W=this.value/10;$('asw-val').textContent=ARC_STROKE_W.toFixed(1);render()">
+</div>
+<div class="sg"><div class="sl"><span>描边颜色</span></div>
+<input type="color" class="cpi" id="arc-stroke-color" value="#000000" onchange="ARC_STROKE_C=this.value;render()">
+</div>
 </div>
 <div class="sec">
 <div class="st">Gyrus 文字颜色</div>
@@ -399,17 +405,28 @@ function switchAtlas(key){
 const LOBE_CN={'Frontal Lobe':'额叶','Temporal Lobe':'颞叶','Parietal Lobe':'顶叶','Insular Lobe':'岛叶','Limbic Lobe':'边缘叶','Occipital Lobe':'枕叶','Subcortical Nuclei':'皮层下核团'};
 
 // ===== COLOR SCHEMES =====
+const HAH_COLORS=['#b4dcff','#b9d4eb','#bfcdd7','#c5c6c4','#cbbfb0','#d0b89c','#d6b189','#dcaa75','#e2a362','#e79c4e','#ed953a','#f38e27','#f98713','#ff8000','#80ffd4','#80f5d7','#80ebda','#80e1dd','#80d7e1','#80cee4','#80c4e7','#80baeb','#80b0ee','#80a7f1','#809df5','#8093f8','#8089fb','#8080ff','#ffff80','#fff07a','#ffe275','#ffd470','#ffc66b','#ffb866','#ffa960','#ff9b5b','#ff8d56','#ff7f51','#ff714c','#ff6347','#00ff64','#06e766','#0dd069','#14b96c','#1ba26e','#228b71','#287374','#2f5c77','#364579','#3d2e7c','#44177f','#4b0082','#ff6464','#fa6d6d','#f57676','#f07f7f','#eb8888','#e69191','#e19a9a','#dca3a3','#d7acac','#d2b5b5','#cdbebe','#c8c8c8','#64ffff','#42cbff','#2197ff','#0064ff','#ffb6c1','#ffabaf','#ffa19d','#ff978c','#ff8c7a','#ff8269','#ff7857','#ff6e46','#ff6334','#ff5923','#ff4f11','#ff4500','#f0f8ff','#d7e7f4','#bfd6e9','#a7c5de','#8eb4d4','#76a3c9','#5e92be','#4682b4','#ffff00','#fff600','#ffed00','#ffe400','#ffdb00','#ffd200','#ffc900','#ffc100','#ffb800','#ffaf00','#ffa600','#ff9d00','#ff9400','#ff8c00','#90ee90','#7cda84','#68c679','#55b26d','#419e62','#2e8b57','#ffa07a','#ff9b7f','#ff9684','#ff9189','#ff8c8f','#ff8794','#ff8299','#ff7d9e','#ff78a4','#ff73a9','#ff6eae','#ff69b4','#e0ffff','#aaf4ef','#75eadf','#40e0d0','#ffb6c1','#fba4b2','#f792a3','#f38094','#ef6e85','#eb5c77','#e74a68','#e33859','#df264a','#dc143c','#add8e6','#9fc6db','#92b5d0','#84a3c5','#7792bb','#6981b0','#5c6fa5','#4e5e9a','#414d90','#333b85','#262a7a','#191970','#ffefd5','#ffe4b6','#ffd998','#ffcf79','#ffc45b','#ffba3c','#ffaf1e','#ffa500','#98fb98','#82e982','#6cd76c','#56c656','#41b441','#2ba32b','#159115','#008000','#ffc0cb','#f9b0c4','#f4a0be','#ef91b7','#ea81b1','#e572ab','#e062a4','#db539e','#d64398','#d13491','#cc248b','#c71585','#e0ffff','#cefaff','#bdf5ff','#acf0ff','#9bebff','#89e6ff','#78e1ff','#67dcff','#56d7ff','#44d2ff','#33cdff','#22c8ff','#11c3ff','#00bfff','#f5deb3','#f6cd9f','#f7bc8b','#f8ab77','#f99a63','#fa894f','#fb783b','#fc6727','#fd5613','#ff4500','#f0e68c','#e5dc7f','#dbd372','#d1ca65','#c7c059','#bdb74c','#b2ae3f','#a8a532','#9e9b26','#949219','#8a890c','#808000','#ffa500','#ff8500','#ff6500','#ff4500','#90ee90','#6bcd6b','#46ac46','#228b22','#ffe4c4','#f6d3b6','#eec2a8','#e6b19a','#dea08c','#d68f7e','#cd7e70','#c56d62','#bd5c54','#b54b46','#ad3a38','#a52a2a','#f5f5dc','#ede9ce','#e6ddc1','#dfd1b3','#d8c6a6','#d1ba99','#caae8b','#c3a27e','#bc9770','#b58b63','#ae7f56','#a77348','#a0683b','#995c2d','#925020','#8b4513'];
+
 const SCHEMES={
   classic:{name:'Classic',colors:{'Frontal Lobe':'#e8876a','Temporal Lobe':'#e8c86a','Parietal Lobe':'#7eb5d6','Insular Lobe':'#e87ba0','Limbic Lobe':'#7ecfcf','Occipital Lobe':'#b8d46a','Subcortical Nuclei':'#c9a0dc'}},
   neon:{name:'Neon',colors:{'Frontal Lobe':'#f472b6','Temporal Lobe':'#34d399','Parietal Lobe':'#a78bfa','Insular Lobe':'#f87171','Limbic Lobe':'#fb923c','Occipital Lobe':'#fbbf24','Subcortical Nuclei':'#38bdf8'}},
   pastel:{name:'Pastel',colors:{'Frontal Lobe':'#fda4af','Temporal Lobe':'#86efac','Parietal Lobe':'#c4b5fd','Insular Lobe':'#fca5a5','Limbic Lobe':'#fdba74','Occipital Lobe':'#fde68a','Subcortical Nuclei':'#93c5fd'}},
-  earth:{name:'Earth',colors:{'Frontal Lobe':'#d97706','Temporal Lobe':'#059669','Parietal Lobe':'#7c3aed','Insular Lobe':'#dc2626','Limbic Lobe':'#ea580c','Occipital Lobe':'#65a30d','Subcortical Nuclei':'#2563eb'}},
+  hah:{name:'HAH',colors:{'Frontal Lobe':'#ff8000','Temporal Lobe':'#ff4500','Parietal Lobe':'#dc143c','Insular Lobe':'#c71585','Limbic Lobe':'#00bfff','Occipital Lobe':'#808000','Subcortical Nuclei':'#8b4513'},perRegion:true},
   bna:{name:'BNA',colors:{'Frontal Lobe':'#e07050','Temporal Lobe':'#e0c050','Parietal Lobe':'#50a0d0','Insular Lobe':'#d050a0','Limbic Lobe':'#50c0c0','Occipital Lobe':'#a0c050','Subcortical Nuclei':'#b080d0'}},
   mono:{name:'Mono',colors:{'Frontal Lobe':'#94a3b8','Temporal Lobe':'#94a3b8','Parietal Lobe':'#94a3b8','Insular Lobe':'#94a3b8','Limbic Lobe':'#94a3b8','Occipital Lobe':'#94a3b8','Subcortical Nuclei':'#94a3b8'}}
 };
 
 let curScheme='neon';
-function getColor(lobe){
+function getColor(lobe, regionIdx){
+  // HAH scheme: use per-region colors from Circos template
+  if(curScheme==='hah' && curAtlasKey==='bna246' && regionIdx!==undefined && HAH_COLORS[regionIdx]){
+    let base=HAH_COLORS[regionIdx];
+    if(COLOR_SHIFT===0) return base;
+    const c=d3.color(base);
+    if(!c) return base;
+    if(COLOR_SHIFT<0) return c.darker(-COLOR_SHIFT/40).formatHex();
+    return c.brighter(COLOR_SHIFT/40).formatHex();
+  }
   let base;
   if(curAtlasKey==='bna246') base=SCHEMES[curScheme].colors[lobe]||NET_COLORS[lobe]||'#888';
   else base=NET_COLORS[lobe]||SCHEMES[curScheme].colors[lobe]||'#888';
@@ -431,9 +448,10 @@ let allR=[], lobeSpans=[], gyrusSpans=[];
 
 // ===== STATE =====
 let selSet=new Set(), labelMode='gyrus', gyrusOnRing=true, showIdx=true;
-let TH=0.30, OP=0.45, PAD=0.02, RW=76, LW=1.5, GFS=18, COLOR_SHIFT=0, ROT=0, CSIZE=100, GAP_SCALE=100;
-let arcHighlight=true;
-let arcColorMode='flat'; // 'flat' or 'gradient'
+let TH=0.30, OP=0.45, PAD=0.04, RW=76, LW=1.5, GFS=18, COLOR_SHIFT=0, ROT=0, CSIZE=100, GAP_SCALE=100;
+let arcHighlight=false;
+let arcColorMode='flat';
+let ARC_STROKE_W=0, ARC_STROKE_C='#000000'; // 'flat' or 'gradient'
 let manualEdges=[], fullFC=null, bgColor='#0a0e17';
 let edgeFilterMode='threshold', TOPN=20, topDir='strong';
 let curTheme='dark';
@@ -980,7 +998,7 @@ function render(){
     const sa=curAngle;
     const ea=sa+arcSpan;
     // Compute arc color: flat or gradient
-    let arcColor=getColor(r.lobe);
+    let arcColor=getColor(r.lobe, i);
     if(arcColorMode==='gradient'){
       const pos=lobePos[r.lobe];
       const total=lobeCounts[r.lobe];
@@ -1001,7 +1019,7 @@ function render(){
   const arcs=g.append('g').selectAll('path').data(ad).join('path')
     .attr('d',d=>arcGen({startAngle:d.sa,endAngle:d.ea}))
     .attr('fill',d=>d.color).attr('fill-opacity',d=>arcHighlight?(selSet.has(d.idx)?1:0.2):0.7)
-    .attr('stroke',d=>d3.color(d.color).darker(0.3)).attr('stroke-width',0.3)
+    .attr('stroke',ARC_STROKE_W>0?ARC_STROKE_C:'none').attr('stroke-width',ARC_STROKE_W)
     .style('cursor','pointer');
 
   // ===== SEPARATORS =====
