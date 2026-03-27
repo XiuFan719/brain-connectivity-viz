@@ -128,26 +128,36 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;hei
 </div>
 
 <div class="sec">
+<div class="st" style="margin-top:8px">圆环配色模式</div>
+<div class="tr">
+<button class="tb a" id="cm-flat" onclick="setArcColorMode('flat')">纯色</button>
+<button class="tb" id="cm-grad" onclick="setArcColorMode('gradient')">渐变</button>
+</div>
 <div class="st" style="margin-top:8px">分隔线 / Separators</div>
 <div class="tr">
 <button class="tb" id="sep-none" onclick="setSep('none')">无</button>
 <button class="tb" id="sep-line" onclick="setSep('line')">细线分隔</button>
 <button class="tb a" id="sep-gap" onclick="setSep('gap')">间隔分隔</button>
 </div>
-<div class="st" style="margin-top:8px">Gyrus 文字颜色</div>
-<div class="tr">
-<button class="tb a" id="gc-auto" onclick="setGyrusColorMode('auto')">自动黑/白</button>
-<button class="tb" id="gc-fixed" onclick="setGyrusColorMode('fixed')">固定颜色</button>
-<button class="tb" id="gc-lobe" onclick="setGyrusColorMode('lobe')">跟随脑区</button>
+<div id="gap-size-ctrl">
+<div class="sg"><div class="sl"><span>间隔大小</span><span id="gap-val">100%</span></div><input type="range" min="20" max="300" value="100" oninput="GAP_SCALE=+this.value;$('gap-val').textContent=GAP_SCALE+'%';render()"></div>
 </div>
-<input type="color" class="cpi" id="gyrus-def-color" value="#ffffff" onchange="gyrusDefaultColor=this.value;render()" style="display:none">
-<div class="desc">点击圆环上的Gyrus名可单独改色/改名/隐藏</div>
+<div class="desc">点击圆环上的Gyrus名可单独改色/改名/改字号/隐藏</div>
 </div>
 
 <div class="sec">
-<div class="desc">输入BNA编号对如 [234,16] 回车</div>
+<div class="st">Manual Edges / 手动边</div>
+<div class="desc">输入编号对如 [234,16] 回车，或用"点击连边模式"在图上直接点两个脑区连线</div>
 <input class="ei" id="edge-in" placeholder="[234,16]" onkeydown="if(event.key==='Enter')addEdges()">
-<div class="el" id="edge-list"></div>
+<div class="tr" style="margin-top:5px">
+<button class="tb a" id="cm-off" onclick="setConnectMode(false)">普通模式</button>
+<button class="tb" id="cm-on" onclick="setConnectMode(true)">点击连边</button>
+</div>
+<div class="desc" id="connect-status" style="color:var(--accent)"></div>
+<div style="display:flex;gap:4px;margin-top:4px">
+<button class="bs" onclick="clearAllManualEdges()" style="flex:1">清除所有手动边</button>
+</div>
+<div style="margin-top:5px;max-height:160px;overflow-y:auto" id="edge-list"></div>
 </div>
 
 <div class="sec">
@@ -253,15 +263,34 @@ Circos Link
 </div>
 <div class="sec">
 <div class="st">Parameters</div>
+<div class="sg"><div class="sl"><span>圆环大小</span><span id="cs-val">100%</span></div><input type="range" min="30" max="100" value="100" oninput="CSIZE=+this.value;$('cs-val').textContent=CSIZE+'%';render()"></div>
 <div class="sg"><div class="sl"><span>连接透明度</span><span id="ov">0.45</span></div><input type="range" min="5" max="95" value="45" oninput="OP=this.value/100;$('ov').textContent=OP.toFixed(2);render()"></div>
 <div class="sg"><div class="sl"><span>弧间距</span><span id="pv">0.02</span></div><input type="range" min="1" max="15" value="2" oninput="PAD=this.value/100;$('pv').textContent=PAD.toFixed(2);render()"></div>
 <div class="sg"><div class="sl"><span>圆环宽度</span><span id="rw">76</span></div><input type="range" min="4" max="100" value="76" oninput="RW=+this.value;$('rw').textContent=RW;render()"></div>
 <div class="sg"><div class="sl"><span>线条粗细</span><span id="lw">1.5</span></div><input type="range" min="2" max="60" value="15" oninput="LW=this.value/10;$('lw').textContent=LW.toFixed(1);render()"></div>
 <div class="sg"><div class="sl"><span>Gyrus字号</span><span id="gfs">18</span></div><input type="range" min="0" max="30" value="18" oninput="GFS=+this.value;$('gfs').textContent=GFS||'自动';render()"></div>
 <div class="sg"><div class="sl"><span>旋转角度</span><span id="rot-val">0°</span></div><input type="range" min="0" max="360" value="0" oninput="ROT=+this.value;$('rot-val').textContent=ROT+'°';render()"></div>
+<div class="sg"><div class="sl"><span>选中脑区加深</span></div>
+<div class="tr">
+<button class="tb a" id="hl-on" onclick="setHighlight(true)">加深</button>
+<button class="tb" id="hl-off" onclick="setHighlight(false)">不加深</button>
+</div></div>
+</div>
+<div class="sec">
+<div class="st">Gyrus 文字颜色</div>
+<div class="tr">
+<button class="tb a" id="gc-auto" onclick="setGyrusColorMode('auto')">自动黑/白</button>
+<button class="tb" id="gc-fixed" onclick="setGyrusColorMode('fixed')">固定颜色</button>
+<button class="tb" id="gc-lobe" onclick="setGyrusColorMode('lobe')">跟随脑区</button>
+</div>
+<input type="color" class="cpi" id="gyrus-def-color" value="#ffffff" onchange="gyrusDefaultColor=this.value;render()" style="display:none">
+<button class="bs" onclick="setAllGyrusColor()" style="margin-top:4px">一键设置所有Gyrus文字颜色</button>
 </div>
 <div class="sec"><div class="st">Info</div><div class="ic" id="info"><h4>Hover</h4><div class="ir"><span class="la">悬停脑区查看详情</span></div></div></div>
-<div class="sec"><button class="bp" onclick="exportSVG()">导出 SVG</button></div>
+<div class="sec" style="display:flex;gap:5px">
+<button class="bp" onclick="exportSVG()" style="flex:1">导出 SVG</button>
+<button class="bp" onclick="exportPNG()" style="flex:1;background:#34d399">导出 PNG</button>
+</div>
 </div>
 </div>
 <div class="tip" id="tip"></div>
@@ -275,12 +304,14 @@ Circos Link
 <button class="bs" onclick="closeEdgePicker()" style="flex:1">关闭</button>
 </div>
 </div>
-<div id="gyrus-picker" style="position:fixed;display:none;z-index:200;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:10px;box-shadow:0 8px 32px rgba(0,0,0,0.5);min-width:180px">
+<div id="gyrus-picker" style="position:fixed;display:none;z-index:200;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:10px;box-shadow:0 8px 32px rgba(0,0,0,0.5);min-width:200px">
 <div style="font-size:10px;color:var(--text-dim);margin-bottom:5px;font-family:'JetBrains Mono',monospace" id="gp-label">Gyrus</div>
 <div style="font-size:11px;margin-bottom:4px;color:var(--text)">名称:</div>
 <input id="gp-name-input" class="ei" style="margin-bottom:6px" placeholder="自定义名称">
 <div style="font-size:11px;margin-bottom:4px;color:var(--text)">颜色:</div>
 <input type="color" id="gp-color-input" style="width:100%;height:28px;border:none;cursor:pointer;border-radius:3px;margin-bottom:6px">
+<div style="font-size:11px;margin-bottom:4px;color:var(--text)">字号: <span id="gp-fs-val">默认</span></div>
+<input type="range" id="gp-fs-input" min="0" max="30" value="0" style="width:100%;margin-bottom:6px" oninput="$('gp-fs-val').textContent=this.value==0?'默认':this.value+'px'">
 <div style="display:flex;gap:3px">
 <button class="bs" onclick="applyGyrusPicker()" style="flex:1">应用</button>
 <button class="bs" onclick="hideGyrusText()" style="flex:1">隐藏</button>
@@ -400,7 +431,9 @@ let allR=[], lobeSpans=[], gyrusSpans=[];
 
 // ===== STATE =====
 let selSet=new Set(), labelMode='gyrus', gyrusOnRing=true, showIdx=true;
-let TH=0.30, OP=0.45, PAD=0.02, RW=76, LW=1.5, GFS=18, COLOR_SHIFT=0, ROT=0;
+let TH=0.30, OP=0.45, PAD=0.02, RW=76, LW=1.5, GFS=18, COLOR_SHIFT=0, ROT=0, CSIZE=100, GAP_SCALE=100;
+let arcHighlight=true;
+let arcColorMode='flat'; // 'flat' or 'gradient'
 let manualEdges=[], fullFC=null, bgColor='#0a0e17';
 let edgeFilterMode='threshold', TOPN=20, topDir='strong';
 let curTheme='dark';
@@ -466,6 +499,14 @@ function setSep(m){
   $('sep-none').classList.toggle('a',m==='none');
   $('sep-line').classList.toggle('a',m==='line');
   $('sep-gap').classList.toggle('a',m==='gap');
+  $('gap-size-ctrl').style.display=m==='gap'?'block':'none';
+  render();
+}
+
+function setArcColorMode(m){
+  arcColorMode=m;
+  $('cm-flat').classList.toggle('a',m==='flat');
+  $('cm-grad').classList.toggle('a',m==='gradient');
   render();
 }
 
@@ -478,11 +519,29 @@ function setGyrusColorMode(m){
   render();
 }
 
+function setAllGyrusColor(){
+  const c=prompt('输入颜色值 (如 #000000 或 black):','#000000');
+  if(!c)return;
+  gyrusColorMode='fixed';
+  gyrusDefaultColor=c;
+  $('gc-auto').classList.remove('a');$('gc-fixed').classList.add('a');$('gc-lobe').classList.remove('a');
+  $('gyrus-def-color').style.display='block';
+  $('gyrus-def-color').value=c;
+  // Clear individual overrides for color
+  Object.keys(gyrusOverrides).forEach(k=>{if(gyrusOverrides[k])delete gyrusOverrides[k].color;});
+  render();
+}
+
 function getGyrusColor(gi, lobeColor){
   if(gyrusOverrides[gi]?.color) return gyrusOverrides[gi].color;
   if(gyrusColorMode==='fixed') return gyrusDefaultColor;
   if(gyrusColorMode==='lobe') return lobeColor;
   return curTheme==='light'?'#000':'#fff';
+}
+
+function getGyrusFontSize(gi, defaultSize){
+  if(gyrusOverrides[gi]?.fontSize) return gyrusOverrides[gi].fontSize;
+  return defaultSize;
 }
 
 function getGyrusName(gi, defaultName){
@@ -497,10 +556,13 @@ function openGyrusPicker(event, gi, name, lobeColor){
   pickerGyrusIdx=gi;
   const ep=$('gyrus-picker');
   ep.style.display='block';
-  ep.style.left=(event.clientX+10)+'px';
-  ep.style.top=(event.clientY+10)+'px';
+  ep.style.left=Math.min(event.clientX+10,window.innerWidth-220)+'px';
+  ep.style.top=Math.min(event.clientY+10,window.innerHeight-300)+'px';
   $('gp-name-input').value=getGyrusName(gi,name)||name;
   $('gp-color-input').value=gyrusOverrides[gi]?.color||getGyrusColor(gi,lobeColor);
+  const fs=gyrusOverrides[gi]?.fontSize||0;
+  $('gp-fs-input').value=fs;
+  $('gp-fs-val').textContent=fs===0?'默认':fs+'px';
   $('gp-label').textContent=name;
 }
 function applyGyrusPicker(){
@@ -508,6 +570,8 @@ function applyGyrusPicker(){
   const ov=gyrusOverrides[pickerGyrusIdx]||{};
   ov.name=$('gp-name-input').value;
   ov.color=$('gp-color-input').value;
+  const fs=+$('gp-fs-input').value;
+  ov.fontSize=fs>0?fs:0;
   ov.hidden=false;
   gyrusOverrides[pickerGyrusIdx]=ov;
   closeGyrusPicker();render();
@@ -805,9 +869,64 @@ function addEdges(){
   inp.value='';renderET();render();
 }
 function rmEdge(i){manualEdges.splice(i,1);renderET();render();}
+function clearAllManualEdges(){manualEdges=[];edgeColors={};renderET();render();}
 function renderET(){
   const el=$('edge-list');el.innerHTML='';
-  manualEdges.forEach((e,i)=>{const t=document.createElement('span');t.className='et';t.innerHTML=`[${e[0]+1},${e[1]+1}] <span class="x" onclick="rmEdge(${i})">&times;</span>`;el.appendChild(t);});
+  if(manualEdges.length===0){el.innerHTML='<div class="desc">暂无手动边</div>';return;}
+  manualEdges.forEach((e,i)=>{
+    const labelA=allR[e[0]]?allR[e[0]].label:'?';
+    const labelB=allR[e[1]]?allR[e[1]].label:'?';
+    const t=document.createElement('div');
+    t.style.cssText='display:flex;align-items:center;gap:4px;padding:2px 4px;font-size:10px;font-family:JetBrains Mono,monospace;color:var(--text);border-bottom:1px solid var(--border)';
+    t.innerHTML=`<span style="color:var(--text-dim);min-width:20px">${i+1}.</span><span>[${e[0]+1},${e[1]+1}]</span><span style="color:var(--text-dim);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${labelA} ↔ ${labelB}</span><span style="cursor:pointer;color:var(--text-dim);font-size:13px" onclick="rmEdge(${i})">&times;</span>`;
+    el.appendChild(t);
+  });
+}
+
+// ===== CONNECT MODE =====
+let connectMode=false;
+let connectFirst=null; // index of first clicked node, null if none
+
+function setConnectMode(on){
+  connectMode=on;
+  connectFirst=null;
+  $('cm-off').classList.toggle('a',!on);
+  $('cm-on').classList.toggle('a',on);
+  $('connect-status').textContent=on?'点击第一个脑区...':'';
+  render();
+}
+
+function setHighlight(on){
+  arcHighlight=on;
+  $('hl-on').classList.toggle('a',on);
+  $('hl-off').classList.toggle('a',!on);
+  render();
+}
+
+function handleArcClick(d){
+  if(connectMode){
+    if(connectFirst===null){
+      connectFirst=d.idx;
+      $('connect-status').textContent=`已选 #${d.id} ${d.label}，点击第二个脑区连线`;
+      $('connect-status').style.color='#fbbf24';
+    } else {
+      if(connectFirst!==d.idx){
+        const a=Math.min(connectFirst,d.idx), b=Math.max(connectFirst,d.idx);
+        if(!manualEdges.some(e=>e[0]===a&&e[1]===b)){
+          manualEdges.push([a,b]);
+          fullFC[a][b]=0.5;fullFC[b][a]=0.5;
+          renderET();render();
+        }
+        $('connect-status').textContent='已连线！点击下一个脑区开始新连接...';
+        $('connect-status').style.color='#34d399';
+      }
+      connectFirst=null;
+      setTimeout(()=>{
+        if(connectMode){$('connect-status').textContent='点击第一个脑区...';$('connect-status').style.color='var(--accent)';}
+      },1500);
+    }
+  }
+  // Normal mode: clicking arcs does nothing (use left panel to select)
 }
 
 // ===== RENDER =====
@@ -817,15 +936,17 @@ function render(){
   const n=allR.length;
   const cw=document.querySelector('.center').clientWidth-20;
   const ch=document.querySelector('.center').clientHeight-20;
-  const size=Math.min(cw,ch,720);
-  const outerR=size/2-70;
+  const maxSize=Math.min(cw,ch,720);
+  const size=Math.round(maxSize*CSIZE/100);
+  const outerR=size/2-Math.round(70*CSIZE/100);
   const innerR=outerR-RW;
   svg.attr('width',size).attr('height',size).attr('viewBox',`0 0 ${size} ${size}`);
   const g=svg.append('g').attr('transform',`translate(${size/2},${size/2})`);
 
   const useGaps=sepMode==='gap';
-  const gyrusGap=useGaps?0.06:0;
-  const lobeGap=useGaps?0.12:0;
+  const gapFactor=GAP_SCALE/100;
+  const gyrusGap=useGaps?0.06*gapFactor:0;
+  const lobeGap=useGaps?0.12*gapFactor:0;
 
   // Calculate total gap space
   let totalGap=0;
@@ -841,8 +962,14 @@ function render(){
 
   // Build arc data with gaps if enabled
   const ad=[];
-  let curAngle=ROT*Math.PI/180; // rotation offset in radians
+  let curAngle=ROT*Math.PI/180;
   let prevLobe=null, prevGyrus=null;
+
+  // Pre-compute lobe region counts for gradient
+  const lobeCounts={};
+  const lobePos={};
+  allR.forEach(r=>{lobeCounts[r.lobe]=(lobeCounts[r.lobe]||0)+1;lobePos[r.lobe]=0;});
+
   allR.forEach((r,i)=>{
     if(useGaps && i>0){
       const curLobeKey=r.lobe;
@@ -852,7 +979,17 @@ function render(){
     }
     const sa=curAngle;
     const ea=sa+arcSpan;
-    ad.push({...r,idx:i,sa,ea,ma:sa+arcSpan/2,color:getColor(r.lobe)});
+    // Compute arc color: flat or gradient
+    let arcColor=getColor(r.lobe);
+    if(arcColorMode==='gradient'){
+      const pos=lobePos[r.lobe];
+      const total=lobeCounts[r.lobe];
+      const t=(total>1)?(pos/(total-1)-0.5):0; // -0.5 to +0.5
+      const c=d3.color(arcColor);
+      if(c) arcColor=(t<0?c.darker(-t*1.2):c.brighter(t*1.2)).formatHex();
+      lobePos[r.lobe]++;
+    }
+    ad.push({...r,idx:i,sa,ea,ma:sa+arcSpan/2,color:arcColor});
     curAngle=ea+pad;
     prevLobe=r.lobe;
     prevGyrus=r.lobe+'|'+r.gs;
@@ -863,7 +1000,7 @@ function render(){
   // ===== ARCS =====
   const arcs=g.append('g').selectAll('path').data(ad).join('path')
     .attr('d',d=>arcGen({startAngle:d.sa,endAngle:d.ea}))
-    .attr('fill',d=>d.color).attr('fill-opacity',d=>selSet.has(d.idx)?1:0.2)
+    .attr('fill',d=>d.color).attr('fill-opacity',d=>arcHighlight?(selSet.has(d.idx)?1:0.2):0.7)
     .attr('stroke',d=>d3.color(d.color).darker(0.3)).attr('stroke-width',0.3)
     .style('cursor','pointer');
 
@@ -907,19 +1044,21 @@ function render(){
       if(!displayName) return; // hidden
       const sa=ad[gs.si].sa, ea=ad[gs.ei].ea;
       const midA=(sa+ea)/2;
+      const normA=((midA%(2*Math.PI))+(2*Math.PI))%(2*Math.PI);
       const midR=(innerR+outerR)/2;
       const angle=midA*180/Math.PI-90;
       const x=Math.cos(midA-Math.PI/2)*midR;
       const y=Math.sin(midA-Math.PI/2)*midR;
       let rot=angle;
-      if(midA>Math.PI) rot=angle+180;
+      if(normA>Math.PI) rot=angle+180;
       const lobeColor=ad[gs.si].color;
+      const fs=getGyrusFontSize(i, gyrusFontSize);
       g.append('text')
         .attr('x',x).attr('y',y)
         .attr('transform',`rotate(${rot},${x},${y})`)
         .attr('text-anchor','middle').attr('dominant-baseline','central')
         .attr('font-family','DM Sans,sans-serif').attr('font-weight','700')
-        .attr('font-size',gyrusFontSize+'px')
+        .attr('font-size',fs+'px')
         .attr('fill',getGyrusColor(i, lobeColor)).attr('fill-opacity',0.9)
         .style('cursor','pointer')
         .on('click',function(event){event.stopPropagation();openGyrusPicker(event,i,gs.name,lobeColor);})
@@ -932,11 +1071,12 @@ function render(){
     lobeSpans.forEach((ls,i)=>{
       const sa=ad[ls.si].sa, ea=ad[ls.ei].ea;
       const midA=(sa+ea)/2;
+      const normA=((midA%(2*Math.PI))+(2*Math.PI))%(2*Math.PI);
       const r=outerR+30;
       const x=Math.cos(midA-Math.PI/2)*r;
       const y=Math.sin(midA-Math.PI/2)*r;
       let angle=midA*180/Math.PI-90;
-      if(midA>Math.PI) angle+=180;
+      if(normA>Math.PI) angle+=180;
       g.append('text')
         .attr('x',x).attr('y',y)
         .attr('transform',`rotate(${angle},${x},${y})`)
@@ -956,9 +1096,9 @@ function render(){
       .attr('font-size','3.5px').attr('dy','0.35em')
       .attr('transform',d=>{
         const a=d.ma*180/Math.PI-90;
-        return `rotate(${a}) translate(${r0}) ${d.ma>Math.PI?'rotate(180)':''}`;
+        return `rotate(${a}) translate(${r0}) ${((d.ma%(2*Math.PI))+(2*Math.PI))%(2*Math.PI)>Math.PI?'rotate(180)':''}`;
       })
-      .attr('text-anchor',d=>d.ma>Math.PI?'end':'start')
+      .attr('text-anchor',d=>((d.ma%(2*Math.PI))+(2*Math.PI))%(2*Math.PI)>Math.PI?'end':'start')
       .text(d=>showIdx?`${d.id}`:d.label)
       .attr('fill',d=>selSet.has(d.idx)?d.color:curTheme==='light'?'#e0e0e0':'#1e293b');
   }
@@ -971,9 +1111,9 @@ function render(){
       .attr('font-size','3px').attr('dy','0.35em')
       .attr('transform',d=>{
         const a=d.ma*180/Math.PI-90;
-        return `rotate(${a}) translate(${r0}) ${d.ma>Math.PI?'rotate(180)':''}`;
+        return `rotate(${a}) translate(${r0}) ${((d.ma%(2*Math.PI))+(2*Math.PI))%(2*Math.PI)>Math.PI?'rotate(180)':''}`;
       })
-      .attr('text-anchor',d=>d.ma>Math.PI?'end':'start')
+      .attr('text-anchor',d=>((d.ma%(2*Math.PI))+(2*Math.PI))%(2*Math.PI)>Math.PI?'end':'start')
       .text(d=>d.id)
       .attr('fill',d=>selSet.has(d.idx)?d3.color(d.color).brighter(0.3):curTheme==='light'?'#e8e8e8':'#151d2b');
   }
@@ -1043,11 +1183,11 @@ function render(){
   })
   .on('mousemove',e=>{tip.style.left=(e.clientX+10)+'px';tip.style.top=(e.clientY-8)+'px';})
   .on('mouseleave',()=>{
-    arcs.attr('fill-opacity',d=>selSet.has(d.idx)?1:0.2);
+    arcs.attr('fill-opacity',d=>arcHighlight?(selSet.has(d.idx)?1:0.2):0.7);
     ribbons.attr('stroke-opacity',OP).attr('stroke-width',LW);
     tip.classList.remove('v');
   })
-  .on('click',(_,d)=>toggle(d.idx));
+  .on('click',(_,d)=>handleArcClick(d));
 
   ribbons.on('mouseenter',function(event,d){
     ribbons.attr('stroke-opacity',rd=>rd===d?0.9:0.02);
@@ -1267,7 +1407,6 @@ function exportFC(){
 
 function exportSVG(){
   const el=$('chord-svg'),c=el.cloneNode(true);
-  // Add background rect
   const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
   bg.setAttribute('width','100%');bg.setAttribute('height','100%');bg.setAttribute('fill',bgColor);
   c.insertBefore(bg,c.firstChild);
@@ -1276,6 +1415,49 @@ function exportSVG(){
   c.insertBefore(s,c.firstChild);
   const blob=new Blob([new XMLSerializer().serializeToString(c)],{type:'image/svg+xml;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='brainring_'+curAtlasKey+'_'+Date.now()+'.svg';a.click();
+}
+
+function exportPNG(){
+  const el=$('chord-svg');
+  const w=+el.getAttribute('width')||720;
+  const h=+el.getAttribute('height')||720;
+  // Draw directly to canvas using foreignObject-free approach
+  const canvas=document.createElement('canvas');
+  const scale=4;
+  canvas.width=w*scale;
+  canvas.height=h*scale;
+  const ctx=canvas.getContext('2d');
+  // Background
+  ctx.fillStyle=bgColor;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  // Clone SVG and serialize
+  const c=el.cloneNode(true);
+  c.setAttribute('xmlns','http://www.w3.org/2000/svg');
+  const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  bg.setAttribute('width',w);bg.setAttribute('height',h);bg.setAttribute('fill',bgColor);
+  c.insertBefore(bg,c.firstChild);
+  const svgStr=new XMLSerializer().serializeToString(c);
+  const blob=new Blob([svgStr],{type:'image/svg+xml;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const img=new Image();
+  img.onload=function(){
+    ctx.drawImage(img,0,0,w*scale,h*scale);
+    URL.revokeObjectURL(url);
+    // Trigger download via blob
+    canvas.toBlob(function(pngBlob){
+      const link=document.createElement('a');
+      link.download='brainring_'+curAtlasKey+'_'+Date.now()+'.png';
+      link.href=URL.createObjectURL(pngBlob);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },'image/png');
+  };
+  img.onerror=function(){
+    URL.revokeObjectURL(url);
+    alert('PNG导出失败，请尝试导出SVG后用其他工具转换');
+  };
+  img.src=url;
 }
 
 window.addEventListener('resize',()=>render());
