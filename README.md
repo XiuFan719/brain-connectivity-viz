@@ -239,7 +239,17 @@ If BrainRing helps your research, please consider citing:
 如果 BrainRing 对你的研究有帮助，欢迎引用：
 
 ```
-BrainRing: Interactive Brain Connectivity Chord Diagram Visualizer
+@misc{brainring,
+      title={BrainRing: An Interactive Web-Based Tool for Brain Connectivity Chord Diagram Visualization}, 
+      author={Xiao Fan and Yi Zhang},
+      year={2026},
+      eprint={2603.27162},
+      archivePrefix={arXiv},
+      primaryClass={cs.HC},
+      url={https://arxiv.org/abs/2603.27162}, 
+}
+
+https://arxiv.org/abs/2603.27162
 https://github.com/XiuFan719/brain-connectivity-viz
 ```
 
