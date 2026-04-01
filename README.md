@@ -22,14 +22,14 @@
 | BrainNet Viewer requires MATLAB / BrainNet Viewer 需要 MATLAB | Pure web, works on any device / 纯网页，任何设备都能用 |
 | Repeated script runs to adjust a figure / 反复跑脚本调参 | Real-time preview, all parameters via sliders / 实时预览，滑块调节 |
 | Changing one edge color is tedious / 改一条边颜色很麻烦 | Click any connection to recolor / 点击连接线直接改色 |
-| Switching between tools for different atlases / 不同图谱切换工具 | 8 built-in atlases, one-click switch / 内置 8 套图谱一键切换 |
+| Switching between tools for different atlases / 不同图谱切换工具 | 8 built-in atlases + custom upload / 内置 8 套图谱 + 自定义上传 |
 | Circos link files need preprocessing / Circos link 文件需要预处理 | Direct upload, colors auto-detected / 直接上传，颜色自动识别 |
 
 ---
 
 ## 🎯 Features / 功能
 
-### Atlas Support / 图谱支持 (8 atlases)
+### Atlas Support / 图谱支持 (8 built-in + Custom / 8 套内置 + 自定义)
 
 | Atlas | Regions | Type | Structure |
 |-------|---------|------|-----------|
@@ -41,6 +41,11 @@
 | **Schaefer-400** | 400 | Functional | Yeo 7-Network → Parcels (L/R) |
 | **Power-264** | 264 | Functional | 14 Networks → Nodes |
 | **Dosenbach-160** | 160 | Functional | 7 Networks → ROIs |
+| **Custom** | Any | User-defined | Upload CSV with `id, label, lobe, gyrus` |
+
+**Custom Atlas / 自定义图谱**: Select "Custom (Upload CSV)" from the atlas dropdown, then upload a CSV file with columns: `id`, `label`, `lobe`, `gyrus`. A sample CSV is available for download within the tool. The custom atlas is cached after upload, so you can switch between built-in and custom atlases freely.
+
+自定义图谱：在图谱下拉框中选择"Custom (Upload CSV)"，上传包含 `id`, `label`, `lobe`, `gyrus` 四列的 CSV 文件即可。工具内提供示例 CSV 下载。上传后自定义图谱会被缓存，可以自由切换。
 
 ### Visualization / 可视化
 
@@ -239,17 +244,7 @@ If BrainRing helps your research, please consider citing:
 如果 BrainRing 对你的研究有帮助，欢迎引用：
 
 ```
-@misc{brainring,
-      title={BrainRing: An Interactive Web-Based Tool for Brain Connectivity Chord Diagram Visualization}, 
-      author={Xiao Fan and Yi Zhang},
-      year={2026},
-      eprint={2603.27162},
-      archivePrefix={arXiv},
-      primaryClass={cs.HC},
-      url={https://arxiv.org/abs/2603.27162}, 
-}
-
-https://arxiv.org/abs/2603.27162
+BrainRing: Interactive Brain Connectivity Chord Diagram Visualizer
 https://github.com/XiuFan719/brain-connectivity-viz
 ```
 

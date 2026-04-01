@@ -115,7 +115,15 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;hei
 <option value="schaefer400">Schaefer-400 (Yeo7)</option>
 <option value="power264">Power-264</option>
 <option value="dosenbach160">Dosenbach-160</option>
+<option value="custom">Custom (Upload CSV)</option>
 </select>
+<input type="file" id="custom-atlas-input" accept=".csv,.txt,.tsv" style="display:none" onchange="loadCustomAtlas(this)">
+<div class="desc" id="custom-atlas-status" style="display:none;color:var(--accent)"></div>
+<div id="custom-atlas-btns" style="display:none;display:flex;gap:4px;margin-top:4px;display:none">
+<button class="bs" onclick="$('custom-atlas-input').click()" style="flex:1" data-i18n="btn_reupload">重新上传</button>
+<button class="bs" onclick="clearCustomAtlas()" style="flex:1" data-i18n="btn_clear_custom">清除自定义</button>
+<button class="bs" onclick="downloadSampleCSV()" style="flex:1" data-i18n="btn_sample_csv">示例CSV</button>
+</div>
 </div>
 
 <div class="sec">
@@ -349,7 +357,7 @@ sec_preset:'配色 Preset',sec_custom:'自定义',sec_params:'Parameters',sec_in
 btn_none_lbl:'无',btn_sub:'子脑区',btn_all:'全部',btn_hide_gyrus:'Gyrus名隐藏',btn_show_gyrus:'Gyrus名在环上',
 btn_hide_idx:'隐藏编号',btn_show_idx:'显示编号',btn_flat:'纯色',btn_gradient:'渐变',
 btn_none_sep:'无',btn_sep_line:'细线分隔',btn_sep_gap:'间隔分隔',
-btn_normal:'普通模式',btn_connect:'点击连边',btn_clear_edges:'清除所有手动边',
+btn_normal:'普通模式',btn_connect:'点击连边',btn_clear_edges:'清除所有手动边',btn_reupload:'重新上传',btn_clear_custom:'清除自定义',btn_sample_csv:'示例CSV',
 btn_reset_fc:'重置为随机FC',btn_export_fc:'导出当前FC',btn_move:'移动',btn_reset_order:'重置顺序',
 btn_sel_all:'全选',btn_sel_clear:'清空',btn_sel_random:'随机',
 btn_dark:'深色',btn_light:'浅色',btn_threshold:'阈值筛选',
@@ -387,7 +395,7 @@ sec_preset:'Color Preset',sec_custom:'Custom',sec_params:'Parameters',sec_info:'
 btn_none_lbl:'None',btn_sub:'Sub-region',btn_all:'All',btn_hide_gyrus:'Hide Gyrus',btn_show_gyrus:'Show on Ring',
 btn_hide_idx:'Hide Index',btn_show_idx:'Show Index',btn_flat:'Flat',btn_gradient:'Gradient',
 btn_none_sep:'None',btn_sep_line:'Lines',btn_sep_gap:'Gaps',
-btn_normal:'Normal',btn_connect:'Click Connect',btn_clear_edges:'Clear All Edges',
+btn_normal:'Normal',btn_connect:'Click Connect',btn_clear_edges:'Clear All Edges',btn_reupload:'Re-upload',btn_clear_custom:'Clear Custom',btn_sample_csv:'Sample CSV',
 btn_reset_fc:'Reset to Random',btn_export_fc:'Export FC',btn_move:'Move',btn_reset_order:'Reset Order',
 btn_sel_all:'All',btn_sel_clear:'Clear',btn_sel_random:'Random',
 btn_dark:'Dark',btn_light:'Light',btn_threshold:'Threshold',
@@ -497,7 +505,38 @@ function buildSpans(flat){
 }
 
 function switchAtlas(key){
+  if(key==='custom'){
+    // If already uploaded, switch directly
+    if(EXTRA_ATLASES['custom']){
+      curAtlasKey='custom';
+      _lobeColorKey='';
+      const raw=EXTRA_ATLASES['custom'].data;
+      allR=buildAtlasFlat(raw,'custom');
+      const spans=buildSpans(allR);
+      lobeSpans=spans.lobeSpans;
+      gyrusSpans=spans.gyrusSpans;
+      fullFC=genFC(allR.length);
+      selSet.clear();
+      manualEdges=[];renderET();
+      origAllR=null;origFC=null;
+      gyrusOverrides={};edgeColors={};
+      const step=Math.max(1,Math.floor(allR.length/20));
+      for(let i=0;i<allR.length;i+=step) selSet.add(i);
+      $('custom-atlas-status').style.display='block';
+      $('custom-atlas-btns').style.display='flex';
+      buildRegionList();buildReorderDropdowns();updUI();render();
+      return;
+    }
+    // No cache, show upload prompt with sample download
+    $('custom-atlas-status').style.display='block';
+    $('custom-atlas-status').innerHTML=curLang==='zh'
+      ?'请上传自定义图谱 CSV（需 label, lobe 列）。<br>不知道格式？<a href="#" onclick="downloadSampleCSV();return false" style="color:var(--accent)">点击下载示例</a>'
+      :'Upload a custom atlas CSV (needs label, lobe columns).<br>Not sure about format? <a href="#" onclick="downloadSampleCSV();return false" style="color:var(--accent)">Download sample</a>';
+    $('custom-atlas-input').click();
+    return;
+  }
   curAtlasKey=key;
+  _lobeColorKey='';
   const raw=getAtlasRaw(key);
   allR=buildAtlasFlat(raw,key);
   const spans=buildSpans(allR);
@@ -507,9 +546,141 @@ function switchAtlas(key){
   selSet.clear();
   manualEdges=[];renderET();
   origAllR=null;origFC=null;
+  gyrusOverrides={};edgeColors={};
   const step=Math.max(1,Math.floor(allR.length/20));
   for(let i=0;i<allR.length;i+=step) selSet.add(i);
+  $('custom-atlas-status').style.display='none';
+  $('custom-atlas-btns').style.display='none';
   buildRegionList();buildReorderDropdowns();updUI();render();
+}
+
+function loadCustomAtlas(input){
+  const file=input.files[0];if(!file)return;
+  const status=$('custom-atlas-status');
+  status.style.display='block';
+  status.textContent=curLang==='zh'?'解析自定义图谱...':'Parsing custom atlas...';
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const lines=e.target.result.trim().split(/\r?\n/).filter(l=>l.trim()&&!l.trim().startsWith('#'));
+      // Detect delimiter
+      const sep=lines[0].includes('\t')?'\t':lines[0].includes(',')?',':/ +/;
+      // Parse header
+      const header=lines[0].split(sep).map(h=>h.trim().toLowerCase());
+      const idxId=header.indexOf('id');
+      const idxLabel=Math.max(header.indexOf('label'),header.indexOf('name'));
+      const idxLobe=Math.max(header.indexOf('lobe'),header.indexOf('network'),header.indexOf('group'));
+      const idxGyrus=Math.max(header.indexOf('gyrus'),header.indexOf('subgroup'),header.indexOf('module'));
+
+      if(idxLabel<0||idxLobe<0){
+        status.textContent=curLang==='zh'?'错误: CSV需要 label 和 lobe/network 列':'Error: CSV needs label and lobe/network columns';
+        status.style.color='#ef4444';
+        return;
+      }
+
+      // Parse rows into atlas data structure
+      const lobeMap={};
+      const dataLines=lines.slice(1);
+      dataLines.forEach((line,i)=>{
+        const cols=line.split(sep).map(c=>c.trim());
+        const id=idxId>=0?parseInt(cols[idxId]):(i+1);
+        const label=cols[idxLabel]||('R'+(i+1));
+        const lobe=cols[idxLobe]||'Default';
+        const gyrus=idxGyrus>=0?(cols[idxGyrus]||lobe):lobe;
+        if(!lobeMap[lobe]) lobeMap[lobe]={};
+        if(!lobeMap[lobe][gyrus]) lobeMap[lobe][gyrus]=[];
+        lobeMap[lobe][gyrus].push({id,label});
+      });
+
+      // Build into standard atlas format
+      const raw=[];
+      Object.entries(lobeMap).forEach(([lobeName,gyri])=>{
+        const gyriArr=[];
+        Object.entries(gyri).forEach(([gyrusName,regions])=>{
+          const short=gyrusName.length>8?gyrusName.substring(0,8):gyrusName;
+          const regArr=regions.map(r=>({
+            labelL:r.label,labelR:r.label,idL:r.id,idR:r.id,cyto:r.label
+          }));
+          gyriArr.push({name:gyrusName+', '+gyrusName,short:short,regions:regArr});
+        });
+        raw.push({name:lobeName,gyri:gyriArr});
+      });
+
+      // Register as custom atlas
+      EXTRA_ATLASES['custom']={name:'Custom',data:raw};
+      curAtlasKey='custom';
+      allR=buildAtlasFlat(raw,'custom');
+      const spans=buildSpans(allR);
+      lobeSpans=spans.lobeSpans;
+      gyrusSpans=spans.gyrusSpans;
+      fullFC=genFC(allR.length);
+      selSet.clear();
+      manualEdges=[];renderET();
+      origAllR=null;origFC=null;
+      gyrusOverrides={};edgeColors={};
+      const step=Math.max(1,Math.floor(allR.length/20));
+      for(let i=0;i<allR.length;i+=step) selSet.add(i);
+
+      const n=allR.length;
+      const nLobes=Object.keys(lobeMap).length;
+      status.textContent=(curLang==='zh'?`✓ 自定义图谱: ${n} 区域, ${nLobes} 分组 (${file.name})`:`✓ Custom atlas: ${n} regions, ${nLobes} groups (${file.name})`);
+      status.style.color='#34d399';
+      $('custom-atlas-btns').style.display='flex';
+      buildRegionList();buildReorderDropdowns();updUI();render();
+    }catch(err){
+      status.textContent=(curLang==='zh'?'错误: ':'Error: ')+err.message;
+      status.style.color='#ef4444';
+    }
+  };
+  reader.readAsText(file);
+  input.value='';
+}
+
+function clearCustomAtlas(){
+  delete EXTRA_ATLASES['custom'];
+  $('custom-atlas-status').style.display='none';
+  $('custom-atlas-btns').style.display='none';
+  document.querySelector('select.ctrl').value='bna246';
+  switchAtlas('bna246');
+}
+
+function downloadSampleCSV(){
+  const csv=`id,label,lobe,gyrus
+1,PFC_L1,Prefrontal,DLPFC
+2,PFC_R1,Prefrontal,DLPFC
+3,PFC_L2,Prefrontal,VLPFC
+4,PFC_R2,Prefrontal,VLPFC
+5,PFC_L3,Prefrontal,OFC
+6,PFC_R3,Prefrontal,OFC
+7,Motor_L1,Motor,Primary
+8,Motor_R1,Motor,Primary
+9,Motor_L2,Motor,SMA
+10,Motor_R2,Motor,SMA
+11,Vis_L1,Visual,V1
+12,Vis_R1,Visual,V1
+13,Vis_L2,Visual,V2
+14,Vis_R2,Visual,V2
+15,Vis_L3,Visual,MT
+16,Vis_R3,Visual,MT
+17,Aud_L1,Auditory,A1
+18,Aud_R1,Auditory,A1
+19,Aud_L2,Auditory,STG
+20,Aud_R2,Auditory,STG
+21,Hipp_L,Limbic,Hippocampus
+22,Hipp_R,Limbic,Hippocampus
+23,Amyg_L,Limbic,Amygdala
+24,Amyg_R,Limbic,Amygdala
+25,ACC_L,Limbic,ACC
+26,ACC_R,Limbic,ACC
+27,Cau_L,Subcortical,Caudate
+28,Cau_R,Subcortical,Caudate
+29,Put_L,Subcortical,Putamen
+30,Put_R,Subcortical,Putamen`;
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='sample_custom_atlas.csv';
+  a.click();
 }
 
 
@@ -528,6 +699,28 @@ const SCHEMES={
 };
 
 let curScheme='neon';
+// Build dynamic lobe->color mapping for current atlas+scheme
+let _lobeColorCache={};
+let _lobeColorKey='';
+function buildLobeColorMap(){
+  const key=curAtlasKey+'|'+curScheme;
+  if(_lobeColorKey===key) return;
+  _lobeColorKey=key;
+  _lobeColorCache={};
+  const lobes=[];
+  allR.forEach(r=>{if(!lobes.includes(r.lobe))lobes.push(r.lobe);});
+  const palette=Object.values(SCHEMES[curScheme].colors);
+  lobes.forEach((lobe,i)=>{
+    if(curAtlasKey==='bna246' && SCHEMES[curScheme].colors[lobe]){
+      // BNA246: use exact scheme key match
+      _lobeColorCache[lobe]=SCHEMES[curScheme].colors[lobe];
+    } else {
+      // All other atlases: cycle through scheme palette
+      _lobeColorCache[lobe]=palette[i%palette.length];
+    }
+  });
+}
+
 function getColor(lobe, regionIdx){
   // HAH scheme: use per-region colors from Circos template
   if(curScheme==='hah' && curAtlasKey==='bna246' && regionIdx!==undefined && HAH_COLORS[regionIdx]){
@@ -538,9 +731,8 @@ function getColor(lobe, regionIdx){
     if(COLOR_SHIFT<0) return c.darker(-COLOR_SHIFT/40).formatHex();
     return c.brighter(COLOR_SHIFT/40).formatHex();
   }
-  let base;
-  if(curAtlasKey==='bna246') base=SCHEMES[curScheme].colors[lobe]||NET_COLORS[lobe]||'#888';
-  else base=NET_COLORS[lobe]||SCHEMES[curScheme].colors[lobe]||'#888';
+  buildLobeColorMap();
+  let base=_lobeColorCache[lobe]||'#888';
   if(COLOR_SHIFT===0) return base;
   const c=d3.color(base);
   if(!c) return base;
@@ -976,7 +1168,7 @@ function buildPresets(){
     Object.values(s.colors).forEach(c=>{const d=document.createElement('div');d.style.background=c;pv.appendChild(d);});
     const pl=document.createElement('div');pl.className='pla';pl.textContent=s.name;
     btn.appendChild(pv);btn.appendChild(pl);
-    btn.onclick=()=>{curScheme=k;document.querySelectorAll('.pb').forEach(b=>b.classList.remove('a'));btn.classList.add('a');render();};
+    btn.onclick=()=>{curScheme=k;_lobeColorKey='';document.querySelectorAll('.pb').forEach(b=>b.classList.remove('a'));btn.classList.add('a');render();};
     g.appendChild(btn);
   });
 }
