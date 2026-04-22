@@ -1207,6 +1207,7 @@ function renderET(){
 // ===== CONNECT MODE =====
 let connectMode=false;
 let connectFirst=null; // index of first clicked node, null if none
+let focusIdx=null; // locked focus region index, null if none
 
 function setConnectMode(on){
   connectMode=on;
@@ -1247,7 +1248,11 @@ function handleArcClick(d){
       },1500);
     }
   }
-  // Normal mode: clicking arcs does nothing (use left panel to select)
+  // Normal mode: toggle focus on this region
+  if(!connectMode){
+    focusIdx=(focusIdx===d.idx)?null:d.idx;
+    render();
+  }
 }
 
 // ===== RENDER =====
@@ -1319,9 +1324,19 @@ function render(){
   const arcGen=d3.arc().innerRadius(innerR).outerRadius(outerR);
 
   // ===== ARCS =====
+  // Compute focused connected set for arc dimming
+  const focusConnSet=new Set();
+  if(focusIdx!==null){
+    focusConnSet.add(focusIdx);
+    for(let j=0;j<n;j++){
+      if(j!==focusIdx && selSet.has(j) && fullFC[focusIdx][j]!==0) focusConnSet.add(j);
+    }
+    manualEdges.forEach(e=>{if(e[0]===focusIdx||e[1]===focusIdx){focusConnSet.add(e[0]);focusConnSet.add(e[1]);}});
+  }
   const arcs=g.append('g').selectAll('path').data(ad).join('path')
     .attr('d',d=>arcGen({startAngle:d.sa,endAngle:d.ea}))
-    .attr('fill',d=>d.color).attr('fill-opacity',d=>arcHighlight?(selSet.has(d.idx)?1:0.2):0.7)
+    .attr('fill',d=>d.color)
+    .attr('fill-opacity',d=>arcHighlight?(selSet.has(d.idx)?1:0.2):0.7)
     .attr('stroke',ARC_STROKE_W>0?ARC_STROKE_C:'none').attr('stroke-width',ARC_STROKE_W)
     .style('cursor','pointer');
 
@@ -1482,8 +1497,14 @@ function render(){
     })
     .attr('fill','none')
     .attr('stroke',d=>getEdgeColor(d,ad))
-    .attr('stroke-opacity',OP)
-    .attr('stroke-width',LW);
+    .attr('stroke-opacity',d=>{
+      if(focusIdx!==null) return (d.s===focusIdx||d.t===focusIdx)?Math.min(OP+0.3,0.95):0.04;
+      return OP;
+    })
+    .attr('stroke-width',d=>{
+      if(focusIdx!==null) return (d.s===focusIdx||d.t===focusIdx)?LW*2.2:LW*0.5;
+      return LW;
+    });
 
   // ===== HOVER =====
   arcs.on('mouseenter',function(event,d){
@@ -1505,7 +1526,12 @@ function render(){
   .on('mousemove',e=>{tip.style.left=(e.clientX+10)+'px';tip.style.top=(e.clientY-8)+'px';})
   .on('mouseleave',()=>{
     arcs.attr('fill-opacity',d=>arcHighlight?(selSet.has(d.idx)?1:0.2):0.7);
-    ribbons.attr('stroke-opacity',OP).attr('stroke-width',LW);
+    if(focusIdx===null){
+      ribbons.attr('stroke-opacity',OP).attr('stroke-width',LW);
+    } else {
+      ribbons.attr('stroke-opacity',d=>(d.s===focusIdx||d.t===focusIdx)?Math.min(OP+0.3,0.95):0.04)
+        .attr('stroke-width',d=>(d.s===focusIdx||d.t===focusIdx)?LW*2.2:LW*0.5);
+    }
     tip.classList.remove('v');
   })
   .on('click',(_,d)=>handleArcClick(d));
@@ -1520,8 +1546,14 @@ function render(){
   })
   .on('mousemove',e=>{tip.style.left=(e.clientX+10)+'px';tip.style.top=(e.clientY-8)+'px';})
   .on('mouseleave',()=>{
-    ribbons.attr('stroke-opacity',OP).attr('stroke-width',LW)
-      .attr('stroke',d=>getEdgeColor(d,ad));
+    if(focusIdx===null){
+      ribbons.attr('stroke-opacity',OP).attr('stroke-width',LW)
+        .attr('stroke',d=>getEdgeColor(d,ad));
+    } else {
+      ribbons.attr('stroke-opacity',d=>(d.s===focusIdx||d.t===focusIdx)?Math.min(OP+0.3,0.95):0.04)
+        .attr('stroke-width',d=>(d.s===focusIdx||d.t===focusIdx)?LW*2.2:LW*0.5)
+        .attr('stroke',d=>getEdgeColor(d,ad));
+    }
     tip.classList.remove('v');
   })
   .on('click',function(event,d){
