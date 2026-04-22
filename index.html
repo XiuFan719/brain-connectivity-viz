@@ -1207,7 +1207,7 @@ function renderET(){
 // ===== CONNECT MODE =====
 let connectMode=false;
 let connectFirst=null; // index of first clicked node, null if none
-let focusIdx=null; // locked focus region index, null if none
+let focusIdx=new Set(); // locked focus region indices
 
 function setConnectMode(on){
   connectMode=on;
@@ -1250,7 +1250,8 @@ function handleArcClick(d){
   }
   // Normal mode: toggle focus on this region
   if(!connectMode){
-    focusIdx=(focusIdx===d.idx)?null:d.idx;
+    if(focusIdx.has(d.idx)) focusIdx.delete(d.idx);
+    else focusIdx.add(d.idx);
     render();
   }
 }
@@ -1326,12 +1327,14 @@ function render(){
   // ===== ARCS =====
   // Compute focused connected set for arc dimming
   const focusConnSet=new Set();
-  if(focusIdx!==null){
-    focusConnSet.add(focusIdx);
-    for(let j=0;j<n;j++){
-      if(j!==focusIdx && selSet.has(j) && fullFC[focusIdx][j]!==0) focusConnSet.add(j);
-    }
-    manualEdges.forEach(e=>{if(e[0]===focusIdx||e[1]===focusIdx){focusConnSet.add(e[0]);focusConnSet.add(e[1]);}});
+  if(focusIdx.size>0){
+    focusIdx.forEach(fi=>{
+      focusConnSet.add(fi);
+      for(let j=0;j<n;j++){
+        if(!focusIdx.has(j) && selSet.has(j) && fullFC[fi][j]!==0) focusConnSet.add(j);
+      }
+      manualEdges.forEach(e=>{if(e[0]===fi||e[1]===fi){focusConnSet.add(e[0]);focusConnSet.add(e[1]);}});
+    });
   }
   const arcs=g.append('g').selectAll('path').data(ad).join('path')
     .attr('d',d=>arcGen({startAngle:d.sa,endAngle:d.ea}))
@@ -1498,11 +1501,11 @@ function render(){
     .attr('fill','none')
     .attr('stroke',d=>getEdgeColor(d,ad))
     .attr('stroke-opacity',d=>{
-      if(focusIdx!==null) return (d.s===focusIdx||d.t===focusIdx)?Math.min(OP+0.3,0.95):0.04;
+      if(focusIdx.size>0) return (focusIdx.has(d.s)||focusIdx.has(d.t))?Math.min(OP+0.3,0.95):0.04;
       return OP;
     })
     .attr('stroke-width',d=>{
-      if(focusIdx!==null) return (d.s===focusIdx||d.t===focusIdx)?LW*2.2:LW*0.5;
+      if(focusIdx.size>0) return (focusIdx.has(d.s)||focusIdx.has(d.t))?LW*2.2:LW*0.5;
       return LW;
     });
 
@@ -1526,11 +1529,11 @@ function render(){
   .on('mousemove',e=>{tip.style.left=(e.clientX+10)+'px';tip.style.top=(e.clientY-8)+'px';})
   .on('mouseleave',()=>{
     arcs.attr('fill-opacity',d=>arcHighlight?(selSet.has(d.idx)?1:0.2):0.7);
-    if(focusIdx===null){
+    if(focusIdx.size===0){
       ribbons.attr('stroke-opacity',OP).attr('stroke-width',LW);
     } else {
-      ribbons.attr('stroke-opacity',d=>(d.s===focusIdx||d.t===focusIdx)?Math.min(OP+0.3,0.95):0.04)
-        .attr('stroke-width',d=>(d.s===focusIdx||d.t===focusIdx)?LW*2.2:LW*0.5);
+      ribbons.attr('stroke-opacity',d=>(focusIdx.has(d.s)||focusIdx.has(d.t))?Math.min(OP+0.3,0.95):0.04)
+        .attr('stroke-width',d=>(focusIdx.has(d.s)||focusIdx.has(d.t))?LW*2.2:LW*0.5);
     }
     tip.classList.remove('v');
   })
@@ -1546,12 +1549,12 @@ function render(){
   })
   .on('mousemove',e=>{tip.style.left=(e.clientX+10)+'px';tip.style.top=(e.clientY-8)+'px';})
   .on('mouseleave',()=>{
-    if(focusIdx===null){
+    if(focusIdx.size===0){
       ribbons.attr('stroke-opacity',OP).attr('stroke-width',LW)
         .attr('stroke',d=>getEdgeColor(d,ad));
     } else {
-      ribbons.attr('stroke-opacity',d=>(d.s===focusIdx||d.t===focusIdx)?Math.min(OP+0.3,0.95):0.04)
-        .attr('stroke-width',d=>(d.s===focusIdx||d.t===focusIdx)?LW*2.2:LW*0.5)
+      ribbons.attr('stroke-opacity',d=>(focusIdx.has(d.s)||focusIdx.has(d.t))?Math.min(OP+0.3,0.95):0.04)
+        .attr('stroke-width',d=>(focusIdx.has(d.s)||focusIdx.has(d.t))?LW*2.2:LW*0.5)
         .attr('stroke',d=>getEdgeColor(d,ad));
     }
     tip.classList.remove('v');
