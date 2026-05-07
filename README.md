@@ -11,7 +11,7 @@
 [![GitHub Pages](https://img.shields.io/badge/demo-live-brightgreen)](https://XiuFan719.github.io/brain-connectivity-viz/)
 
 **Live Demo / 在线体验**: [https://XiuFan719.github.io/brain-connectivity-viz/](https://XiuFan719.github.io/brain-connectivity-viz/)
-
+**Arxiv**: https://arxiv.org/abs/2603.27162
 ---
 
 ## ✨ Why BrainRing? / 为什么选择 BrainRing？
